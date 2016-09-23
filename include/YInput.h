@@ -1,6 +1,8 @@
 #ifndef YINPUT_H
 #define YINPUT_H
 
+namespace Kobu {
+
 class YInput
 {
     private :
@@ -8,5 +10,8 @@ class YInput
      public :
 
 };
+
+
+} // namespace Kobu
 
 #endif

@@ -2,7 +2,9 @@
 #define YCONTEXT_H
 
 
-#include "YTypes.h"
+#include "util/YTypes.h"
+
+namespace Kobu {
 
 class YContext
 {
@@ -26,6 +28,8 @@ public :
 
 };
  
+ 
+} // namespace Kobu
 
 
 #endif

@@ -2,9 +2,11 @@
 #define YCOMPOSITOR_H
 
 
-#include "YTypes.h"
+#include "util/YTypes.h"
 #include "core/YWindow.h"
 
+namespace Kobu {
+    
 class YCompositor
 {
 private :
@@ -18,7 +20,8 @@ public :
 
 
 };
- 
+
+} // namespace Kobu
 
 
 #endif

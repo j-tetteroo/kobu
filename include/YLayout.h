@@ -1,6 +1,8 @@
 #ifndef YLAYOUT_H
 #define YLAYOUT_H
 
+namespace Kobu {
+    
 class YLayout
 {
     private :
@@ -8,5 +10,7 @@ class YLayout
      public :
 
 };
+
+} // namespace Kobu
 
 #endif
