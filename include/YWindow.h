@@ -1,7 +1,7 @@
 #ifndef YWINDOW_H
 #define YWINDOW_H
 
-namespace Kobu {
+namespace kobu {
 
 class YWindow
 {
@@ -12,7 +12,7 @@ public :
 };
 
 
-} // namespace Kobu
+} // namespace kobu
 
 #endif
 

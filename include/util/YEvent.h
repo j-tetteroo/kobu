@@ -1,7 +1,7 @@
 #ifndef YEVENT_H
 #define YEVENT_H
 
-namespace Kobu {
+namespace kobu {
 
 enum class EventType { 
     MOUSE, 
@@ -18,10 +18,10 @@ private :
 
 public :
     YEvent(EventType e) : et(e) {}
-    EventType getType() const { return et; }
+    EventType GetType() const { return et; }
     
 };
 
-} // namespace Kobu
+} // namespace kobu
 
 #endif

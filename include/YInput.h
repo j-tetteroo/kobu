@@ -1,7 +1,7 @@
 #ifndef YINPUT_H
 #define YINPUT_H
 
-namespace Kobu {
+namespace kobu {
 
 class YInput
 {
@@ -12,6 +12,6 @@ class YInput
 };
 
 
-} // namespace Kobu
+} // namespace kobu
 
 #endif

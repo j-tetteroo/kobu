@@ -4,7 +4,7 @@
 
 #include "util/YTypes.h"
 
-namespace Kobu {
+namespace kobu {
 
 class YContext
 {
@@ -21,15 +21,15 @@ private :
 public :
     YContext(void) {};
     ~YContext(void) {};
-    virtual void setupBuffer(uint32 *buffer, uint32 width, uint32 height)=0;
-    virtual void flip()=0;
-    virtual void flush()=0;
-    virtual void destroyBuffer()=0;
+    virtual void SetupBuffer(uint32 *buffer, uint32 width, uint32 height)=0;
+    virtual void Flip()=0;
+    virtual void Flush()=0;
+    virtual void DestroyBuffer()=0;
 
 };
  
  
-} // namespace Kobu
+} // namespace kobu
 
 
 #endif

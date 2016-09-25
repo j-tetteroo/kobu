@@ -5,7 +5,7 @@
 #include "util/Y2DCoord.h"
 
 
-namespace Kobu {
+namespace kobu {
     
 enum class MouseEventType { 
     M_DOWN, 
@@ -36,12 +36,12 @@ public :
     YMouseEvent(float x, float y, MouseEventType met, MouseButton mb) 
                 : YEvent(EventType::MOUSE), x(x), y(y), met(met), mb(mb) {}
                 
-    MouseEventType getMEType() const { return met; }
-    MouseButton getButton() const { return mb; }
-    Y2DCoord getXY() const { return Y2DCoord(x, y); }
+    MouseEventType GetMeType() const { return met; }
+    MouseButton GetButton() const { return mb; }
+    Y2DCoord GetXY() const { return Y2DCoord(x, y); }
     
 };
 
-} // namespace Kobu
+} // namespace kobu
 
 #endif

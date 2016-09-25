@@ -1,7 +1,7 @@
 #ifndef YLAYOUT_H
 #define YLAYOUT_H
 
-namespace Kobu {
+namespace kobu {
     
 class YLayout
 {
@@ -11,6 +11,6 @@ class YLayout
 
 };
 
-} // namespace Kobu
+} // namespace kobu
 
 #endif

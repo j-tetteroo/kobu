@@ -6,13 +6,13 @@
 
 #include "window/YWidget.h"
 
-namespace Kobu {
+namespace kobu {
 
 class YButton : YWidget
 {
     
 private :
-    String buttonText;
+    String button_text;
 
 public :
     YButton(String text, float x, float y) : buttonText(text), YWidget(x,y) {};
@@ -20,6 +20,6 @@ public :
 
 };
 
-} // namespace Kobu
+} // namespace kobu
 
 #endif

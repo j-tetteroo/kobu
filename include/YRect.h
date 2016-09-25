@@ -1,7 +1,7 @@
 #ifndef YRECT_H
 #define YRECT_H
 
-namespace Kobu {
+namespace kobu {
 
 class YRect
 {
@@ -13,11 +13,11 @@ private :
 
 public :
     YRect(float w, float h) : width(w), height(h) {}
-    float getWidth() const { return width; }
-    float getHeight() const { return height; }
+    float GetWidth() const { return width; }
+    float GetHeight() const { return height; }
 
 };
 
-} // namespace Kobu
+} // namespace kobu
 
 #endif

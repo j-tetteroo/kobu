@@ -5,7 +5,7 @@
 #include "util/YTypes.h"
 #include "core/YWindow.h"
 
-namespace Kobu {
+namespace kobu {
     
 class YCompositor
 {
@@ -16,12 +16,12 @@ private :
 public :
     YCompositor(void) {};
     ~YCompositor(void) {};
-    virtual draw(void)=0;
+    virtual Draw(void)=0;
 
 
 };
 
-} // namespace Kobu
+} // namespace kobu
 
 
 #endif

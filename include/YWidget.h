@@ -3,7 +3,7 @@
 
 #include "util/YRect.h"
 
-namespace Kobu {
+namespace kobu {
 
 enum class WidgetState { ACTIVE, TRIGGERED, DISABLED, INVISIBLE };
 
@@ -20,14 +20,14 @@ private :
 
 public :
     YWidget(float x, float y) : x(x), y(y) {}
-    virtual void draw() = 0;
-    virtual YRect getBounds() = 0;
-    virtual void triggerEvent(YEvent e) = 0;
-    WidgetState getState() const { return state; }
+    virtual void Draw() = 0;
+    virtual YRect GetBounds() = 0;
+    virtual void TriggerEvent(YEvent e) = 0;
+    WidgetState GetState() const { return state; }
     
 
 };
 
-} // namespace Kobu
+} // namespace kobu
 
 #endif

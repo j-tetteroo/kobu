@@ -8,6 +8,9 @@
 #include "gl/GrGLUtil.h"
 #include <GL/gl.h>
 
+#include "core/YGraphics.h"
+#include "util/Y2DCoord.h"
+
 
 struct ApplicationState {
     ApplicationState() : fQuit(false) {}
@@ -83,6 +86,7 @@ static void handle_events(ApplicationState* state, SkCanvas* canvas) {
 int main(int argc, char** argv) {
 
     uint32_t windowFlags = 0;
+    kobu::YGraphics *graphics;
 
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
@@ -185,6 +189,7 @@ int main(int argc, char** argv) {
     sk_sp<SkSurface> surface(SkSurface::MakeFromBackendRenderTarget(grContext, desc, &props));
 
     SkCanvas* canvas = surface->getCanvas();
+    graphics = new kobu::YGraphics(surface->getCanvas());
 
     ApplicationState state;
 
@@ -224,6 +229,9 @@ int main(int argc, char** argv) {
         }
 
         drawButton(canvas);
+        graphics->DrawRoundRect(kobu::Y2DCoord(10, 100), 
+            kobu::Y2DCoord(100,100), 10);
+        graphics->DrawText("Splop", kobu::Y2DCoord(300, 300));
 
         // draw offscreen canvas
         canvas->save();

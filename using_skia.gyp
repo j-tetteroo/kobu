@@ -19,10 +19,12 @@
         'third_party/skia/include/utils',
         'third_party/skia/third_party/externals/sdl/include',
         'third_party/skia/src/gpu/',
-        'include',
+        'include/',
       ],
       'sources': [
-        'main.cpp'
+        'main.cpp',
+        'src/core/YGraphics.cpp',
+  
       ],
       'ldflags': [
         '-std=c++11',

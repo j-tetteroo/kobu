@@ -1,7 +1,7 @@
 #ifndef Y2DCOORD_H
 #define Y2DCOORD_H
 
-namespace Kobu {
+namespace kobu {
 
 class Y2DCoord
 {
@@ -13,11 +13,11 @@ private :
 
 public :
     Y2DCoord(float x, float y) : x(x), y(y) {}
-    float getX() const { return x; }
-    float getY() const { return y; }
+    float GetX() const { return x; }
+    float GetY() const { return y; }
 
 };
 
-} // namespace Kobu
+} // namespace kobu
 
 #endif
