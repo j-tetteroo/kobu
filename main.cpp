@@ -9,7 +9,7 @@
 #include <GL/gl.h>
 
 #include "core/YGraphics.h"
-#include "util/Y2DCoord.h"
+#include "widgets/YButton.h"
 
 
 struct ApplicationState {
@@ -87,6 +87,8 @@ int main(int argc, char** argv) {
 
     uint32_t windowFlags = 0;
     kobu::YGraphics *graphics;
+    kobu::YButton *button;
+    kobu::Vec2 button_pos;
 
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
@@ -190,6 +192,11 @@ int main(int argc, char** argv) {
 
     SkCanvas* canvas = surface->getCanvas();
     graphics = new kobu::YGraphics(surface->getCanvas());
+    button_pos.x = button_pos.y = 400.0;
+    char appelsap[] = "Appelsap";
+    button = new kobu::YButton((char *)appelsap, button_pos);
+
+    
 
     ApplicationState state;
 
@@ -227,12 +234,13 @@ int main(int argc, char** argv) {
             paint.setColor(rand.nextU() | 0x44808080);
             canvas->drawRect(state.fRects[i], paint);
         }
-
-        drawButton(canvas);
+        button->Draw(graphics);
+        //drawButton(canvas);
+        /*
         graphics->DrawRoundRect(kobu::Y2DCoord(10, 100), 
             kobu::Y2DCoord(100,100), 10);
         graphics->DrawText("Splop", kobu::Y2DCoord(300, 300));
-
+        */
         // draw offscreen canvas
         canvas->save();
         canvas->translate(dm.w / 2.0, dm.h / 2.0);

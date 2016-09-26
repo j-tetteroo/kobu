@@ -8,14 +8,19 @@
 
 namespace kobu {
 
-class YButton : YWidget
+class YButton : public YWidget
 {
     
 private :
-    String button_text;
+    char *button_text;
 
 public :
-    YButton(String text, float x, float y) : buttonText(text), YWidget(x,y) {};
+    
+    void Draw(YGraphics *g);
+    YRect GetBounds();
+    void TriggerEvent(YEvent e);
+    ~YButton() {};
+    YButton(char *text, Vec2 pos);
     
 
 };

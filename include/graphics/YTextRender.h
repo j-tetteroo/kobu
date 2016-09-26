@@ -8,8 +8,7 @@ class YTextRender
 {
     
 private :
-    float x;
-    float y;
+
 
     
 public :

@@ -2,7 +2,7 @@
 #define YMOUSE_EVENT_H
 
 #include "core/YEvent.h"
-#include "util/Y2DCoord.h"
+#include "util/YTypes.h"
 
 
 namespace kobu {
@@ -27,18 +27,17 @@ class YMouseEvent : YEvent
 {
     
 private :
-    float x;
-    float y;
+    Vec2 xy;
     MouseEventType met;
     MouseButton mb;
     
 public :
-    YMouseEvent(float x, float y, MouseEventType met, MouseButton mb) 
-                : YEvent(EventType::MOUSE), x(x), y(y), met(met), mb(mb) {}
+    YMouseEvent(Vec2 xy, MouseEventType met, MouseButton mb) 
+                : YEvent(EventType::MOUSE), xy(xy), met(met), mb(mb) {}
                 
     MouseEventType GetMeType() const { return met; }
     MouseButton GetButton() const { return mb; }
-    Y2DCoord GetXY() const { return Y2DCoord(x, y); }
+    Vec2 GetXY() const { return xy; }
     
 };
 

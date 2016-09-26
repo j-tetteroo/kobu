@@ -5,7 +5,6 @@
 
 #include "SkCanvas.h"
 #include "util/YTypes.h"
-#include "util/Y2DCoord.h"
 
 namespace kobu {
     
@@ -22,10 +21,11 @@ public :
     YGraphics(SkCanvas *c) : canvas(c) {};
     ~YGraphics(void) {};
     
-    void DrawRoundRect(Y2DCoord xy, Y2DCoord wh, float r);
-    void DrawRect(Y2DCoord xy, Y2DCoord wh);
-    void DrawText(std::string text, Y2DCoord xy);
     
+    
+    void DrawRoundRect(uint32_t color, Vec2 pos, Vec2 wh, float r);
+    void DrawRect(Vec2 pos, Vec2 wh);
+    void DrawText(uint32_t color, char *text, Vec2 pos);
 
 };
 

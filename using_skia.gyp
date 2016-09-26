@@ -24,6 +24,7 @@
       'sources': [
         'main.cpp',
         'src/core/YGraphics.cpp',
+        'src/widgets/YButton.cpp',
   
       ],
       'ldflags': [
