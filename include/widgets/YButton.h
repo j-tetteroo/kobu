@@ -15,12 +15,12 @@ private :
     char *button_text;
 
 public :
-    
+    YButton(char *text, Vec2 pos);
     void Draw(YGraphics *g);
     YRect GetBounds();
     void TriggerEvent(YEvent e);
     ~YButton() {};
-    YButton(char *text, Vec2 pos);
+
     
 
 };

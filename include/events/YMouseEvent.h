@@ -23,7 +23,7 @@ enum class MouseButton {
     M_AUX2
 };
 
-class YMouseEvent : YEvent
+class YMouseEvent : public YEvent
 {
     
 private :
