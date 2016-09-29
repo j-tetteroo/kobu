@@ -8,18 +8,15 @@
 
 namespace kobu {
     
-class YCompositor
+class YCompositorInterface
 {
-protected:
-    std::vector<YWindow *> windows;
-    
+
 
 public :
-    YCompositor(void) {};
     virtual ~YCompositor(void) {};
-    virtual void AddWindow(YWindow *window)=0;
-    virtual void Draw(void)=0;
-    virtual void TriggerEvent(YEvent e)=0;
+    virtual void AddWindow(YWindow *window) = 0;
+    virtual void Draw(void) = 0;
+    virtual void TriggerEvent(YEvent e) = 0;
 
 
 };

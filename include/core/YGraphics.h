@@ -18,9 +18,8 @@ private :
     
 
 public :
-    YGraphics(SkCanvas *c) : canvas(c) {};
-    ~YGraphics(void) {};
-    
+    YGraphics(SkCanvas *c);
+    ~YGraphics(void);
     
     
     void DrawRoundRect(uint32_t color, Vec2 pos, Vec2 wh, float r);

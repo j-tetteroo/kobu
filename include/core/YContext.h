@@ -3,6 +3,7 @@
 
 
 #include "util/YTypes.h"
+#include "core/YCompositor.h"
 
 namespace kobu {
 

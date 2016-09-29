@@ -8,6 +8,13 @@
 #include "core/YGraphics.h"
 #include "util/YTypes.h"
 
+kobu::YGraphics::YGraphics(SkCanvas *c) : canvas(c) {
+
+}
+
+kobu::YGraphics::~YGraphics(void) {
+
+}
 
 void kobu::YGraphics::DrawRoundRect(uint32_t color, kobu::Vec2 pos, 
     kobu::Vec2 wh, float r) {

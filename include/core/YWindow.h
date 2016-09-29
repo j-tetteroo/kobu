@@ -8,17 +8,20 @@ namespace kobu {
 class YWindow
 {
 protected :
+    YWindow(YRect w) : window(w), z(INT_MAX) {}
+
+	YContainer *container;
 	YRect window;
 	uint32_t z;
 
 
-
 public :
-    YWindow(YRect w) : window(w), z(INT_MAX) {}
     virtual ~YWindow(void) {}
     virtual void Draw(void)=0;
+    virtual void Resize(YRect bounds);
     virtual void TriggerEvent(YEvent e)=0;
-    uint32_t GetZ(void) { return z; }
+    uint32_t GetZ(void) const { return z; }
+    void SetContainer(YContainer *container) { container = container; }
 
 };
 
