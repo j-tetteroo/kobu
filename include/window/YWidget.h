@@ -15,18 +15,21 @@ class YWidget
 private :
 
 protected :
-    Vec2 pos;
-    Vec2 wh;
-    WidgetState state;
+    Vec2 pos_;
+    Vec2 wh_;
+    WidgetState state_;
 
 
 public :
-    YWidget(Vec2 pos) : pos(pos) {}
+    YWidget() {
+    	pos_.x = pos_.y = 0.0;
+    }
+    YWidget(Vec2 pos) : pos_(pos) {}
     virtual ~YWidget() {};
     virtual void Draw(YGraphics *g) = 0;
     virtual YRect GetBounds() = 0;
-    virtual void TriggerEvent(YEvent e) = 0;
-    WidgetState GetState() const { return state; }
+    virtual void TriggerEvent(YEvent *e) = 0;
+    WidgetState GetState() const { return state_; }
     
 
 };

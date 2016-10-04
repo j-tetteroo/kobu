@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "GrContext.h"
 #include "SDL.h"
 #include "SkCanvas.h"
@@ -10,12 +12,22 @@
 
 #include "core/YGraphics.h"
 #include "widgets/YButton.h"
+#include "events/YMouseEvent.h"
+#include "window/YGuiContainer.h"
+#include "util/YTypes.h"
 
+
+    kobu::YGraphics *graphics;
+    kobu::YButton *button;
+    kobu::YGuiContainer *container;
 
 struct ApplicationState {
     ApplicationState() : fQuit(false) {}
     // Storage for the user created rectangles. The last one may still be being edited.
     SkTArray<SkRect> fRects;
+    kobu::YGuiContainer *container;
+
+
     bool fQuit;
 };
 
@@ -25,6 +37,7 @@ static void handle_error() {
     SDL_ClearError();
 }
 
+/*
 void drawButton(SkCanvas* canvas) {
     canvas->save();
     canvas->translate(SkIntToScalar(128), SkIntToScalar(128));
@@ -45,10 +58,14 @@ void drawButton(SkCanvas* canvas) {
                          SkIntToScalar(0), paint);
     canvas->restore();
 }
+*/
 
 
 static void handle_events(ApplicationState* state, SkCanvas* canvas) {
     SDL_Event event;
+    kobu::Vec2 coords;
+    kobu::YMouseEvent *me;
+
     while(SDL_PollEvent(&event)) {
         switch (event.type) {
             case SDL_MOUSEMOTION:
@@ -65,6 +82,22 @@ static void handle_events(ApplicationState* state, SkCanvas* canvas) {
                                                                  SkIntToScalar(event.button.x),
                                                                  SkIntToScalar(event.button.y));
                 }
+
+                coords.x = event.button.x;
+                coords.y = event.button.y;
+                std::cout << event.button.x << " " << event.button.y << "\n";
+                me = new kobu::YMouseEvent(coords, kobu::MouseEventType::M_DOWN , kobu::MouseButton::M_LEFT);
+                container->TriggerEvent((kobu::YEvent *)me);
+                delete me;
+                
+                
+                break;
+            case SDL_MOUSEBUTTONUP:
+                coords.x = event.button.x;
+                coords.y = event.button.y;
+                me = new kobu::YMouseEvent(coords, kobu::MouseEventType::M_UP , kobu::MouseButton::M_LEFT);
+                container->TriggerEvent((kobu::YEvent *)me);
+                delete me;
                 break;
             case SDL_KEYDOWN: {
                 SDL_Keycode key = event.key.keysym.sym;
@@ -86,9 +119,12 @@ static void handle_events(ApplicationState* state, SkCanvas* canvas) {
 int main(int argc, char** argv) {
 
     uint32_t windowFlags = 0;
-    kobu::YGraphics *graphics;
-    kobu::YButton *button;
+
     kobu::Vec2 button_pos;
+    kobu::YRect clip_region;
+    kobu::Vec2 test1, test2;
+
+
 
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
@@ -191,16 +227,32 @@ int main(int argc, char** argv) {
     sk_sp<SkSurface> surface(SkSurface::MakeFromBackendRenderTarget(grContext, desc, &props));
 
     SkCanvas* canvas = surface->getCanvas();
+
     graphics = new kobu::YGraphics(surface->getCanvas());
+
+    /* KOBU STUFF */
+    clip_region.x = 200.0;
+    clip_region.y = 200.0;
+    clip_region.w = 400.0;
+    clip_region.h = 400.0;
+
+    test1.x = 0.0;
+    test1.y = 0.0;
+    test2.x = 100.0;
+    test2.y = 100.0;
+
+
     button_pos.x = button_pos.y = 400.0;
-    char appelsap[] = "Appelsap";
-    button = new kobu::YButton((char *)appelsap, button_pos);
+    std::string appelsap = "Appelsap";
+    button = new kobu::YButton(appelsap, button_pos);
+    container = new kobu::YGuiContainer(clip_region);
+    container->AddWidget(button);
 
     
-
+    /* END KOBU */
     ApplicationState state;
 
-    const char* helpMessage = "Click and drag to create rects.  Press esc to quit.";
+    //const char* helpMessage = "Click and drag to create rects.  Press esc to quit.";
 
     SkPaint paint;
 
@@ -215,13 +267,14 @@ int main(int argc, char** argv) {
 */
     sk_sp<SkImage> image = cpuSurface->makeImageSnapshot();
 
-    int rotation = 0;
+    //int rotation = 0;
  
     while (!state.fQuit) { // Our application loop
+        
         SkRandom rand;
         canvas->clear(SK_ColorWHITE);
         handle_events(&state, canvas);
-
+        /*
         paint.setColor(SK_ColorBLACK);
         paint.setAntiAlias(true);
         canvas->drawText(helpMessage, strlen(helpMessage), SkIntToScalar(100),
@@ -230,11 +283,17 @@ int main(int argc, char** argv) {
         canvas->drawText(helpMessage, strlen(helpMessage), SkIntToScalar(100),
                          SkIntToScalar(120), paint);
 
+        canvas->save();
         for (int i = 0; i < state.fRects.count(); i++) {
             paint.setColor(rand.nextU() | 0x44808080);
             canvas->drawRect(state.fRects[i], paint);
         }
-        button->Draw(graphics);
+        canvas->restore();
+        container->Draw(graphics);
+        */
+        canvas->save();
+        canvas->translate(0.0, 50.0);
+            graphics->DrawRoundRect(0xFF00FF00, test1, test2, 10.0);
         //drawButton(canvas);
         /*
         graphics->DrawRoundRect(kobu::Y2DCoord(10, 100), 
@@ -242,12 +301,14 @@ int main(int argc, char** argv) {
         graphics->DrawText("Splop", kobu::Y2DCoord(300, 300));
         */
         // draw offscreen canvas
+        /*
         canvas->save();
         canvas->translate(dm.w / 2.0, dm.h / 2.0);
         canvas->rotate(rotation++);
         canvas->drawImage(image, -50.0f, -50.0f);
         canvas->restore();
-
+        */
+        canvas->restore();
         canvas->flush();
         SDL_GL_SwapWindow(window);
     }
@@ -255,6 +316,9 @@ int main(int argc, char** argv) {
     if (glContext) {
         SDL_GL_DeleteContext(glContext);
     }
+
+    delete button;
+    delete container;
 
     //Destroy window
     SDL_DestroyWindow(window);

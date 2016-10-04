@@ -2,41 +2,62 @@
 
 #include "widgets/YButton.h"
 #include "core/YGraphics.h"
+#include <iostream>
 
 void kobu::YButton::Draw(YGraphics *g) {
 
-	Vec2 newpos = this->pos;
+	Vec2 newpos = pos_;
 	newpos.x += 20.0;
 	newpos.y += 50.0;
-    g->DrawRoundRect(0xFFFF0000, this->pos, this->wh, 10.0);
-    g->DrawText(0xFFFFFFFF, this->button_text, newpos);
+    g->DrawRoundRect(0xFFFF0000, pos_, wh_, 10.0);
+    g->DrawText(0xFFFFFFFF, button_text_.c_str(), newpos);
 
 }
 
 kobu::YRect kobu::YButton::GetBounds() {
     
-	kobu::YRect rect;
-
+	YRect rect;
+	rect.x = pos_.x;
+	rect.y = pos_.y;
+	rect.w = wh_.x;
+	rect.h = wh_.y;
     return rect;
     
 }
 
 
-void kobu::YButton::TriggerEvent(kobu::YEvent e) {
+void kobu::YButton::TriggerEvent(kobu::YEvent *e) {
     
-    return;
+	switch(e->GetType()) {
+		case YEventType::MOUSE:
+			HandleMouseEvent((YMouseEvent *)e);
+			break;
+		default:
+			return;
+	}
     
 }
 
-kobu::YButton::YButton(char *text, Vec2 pos) : YWidget(pos), button_text(text) {
+void kobu::YButton::HandleMouseEvent(YMouseEvent *e) {
+	if (e->GetButton() == MouseButton::M_LEFT) {
+		if (e->GetMeType() ==  MouseEventType::M_DOWN) {
+			button_text_ = "Flop";
+		} else if (e->GetMeType() ==  MouseEventType::M_UP) {
+			button_text_ = "Flap";
+		}
+	}
+}
 
-	kobu::Vec2 wh;
+kobu::YButton::YButton(std::string text, Vec2 pos) : YWidget(pos), button_text_(text) {
+
+	Vec2 wh;
 	wh.x = 100.0;
 	wh.y = 100.0;
-	this->wh = wh;
+	wh_ = wh;
+	pos_ = pos;
 }
-/*
+
 kobu::YButton::~YButton() {
 
 }
-*/
+

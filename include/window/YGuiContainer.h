@@ -1,8 +1,15 @@
 #ifndef YGUICONTAINER_H
 #define YGUICONTAINER_H
 
+#include <vector>
+
 #include "window/YContainer.h"
 #include "window/YLayout.h"
+#include "window/YWidget.h"
+#include "core/YEvent.h"
+#include "events/YMouseEvent.h"
+#include "util/YTypes.h"
+
 
 namespace kobu {
 
@@ -10,21 +17,25 @@ class YGuiContainer : public YContainer
 {
 
 private :
-	YLayout *layout;
-	std::vector<YWidget *> widgets;
+	YLayout *layout_;
+	std::vector<YWidget *> widgets_;
+
+	void HandleMouseEvent(YMouseEvent *e);
 
 
 public :
-	YGuiContainer(void);
+	YGuiContainer(YRect clip_region);
     ~YGuiContainer(void);
     
     void AddWidget(YWidget *w);
-    void Draw(void);
+    void Draw(YGraphics *g);
     void Resize(YRect bounds);
-    void TriggerEvent(YEvent e);
+    void TriggerEvent(YEvent *e);
+    YRect GetBounds();
+
 
     void SetLayout(YLayout *l);
-    Layout *Getlayout();
+    YLayout *Getlayout();
 
 };
 

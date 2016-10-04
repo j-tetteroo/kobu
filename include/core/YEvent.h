@@ -3,7 +3,7 @@
 
 namespace kobu {
 
-enum class EventType { 
+enum class YEventType { 
     MOUSE, 
     KEYBOARD, 
     TOUCH
@@ -13,12 +13,12 @@ class YEvent
 {
     
 private :
-    EventType et;
+    YEventType et;
     
 
 public :
-    YEvent(EventType e) : et(e) {}
-    EventType GetType() const { return et; }
+    YEvent(YEventType e) : et(e) {}
+    YEventType GetType() const { return et; }
     
 };
 

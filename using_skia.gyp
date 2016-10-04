@@ -25,6 +25,7 @@
         'main.cpp',
         'src/core/YGraphics.cpp',
         'src/widgets/YButton.cpp',
+        'src/window/YGuiContainer.cpp'
   
       ],
       'ldflags': [

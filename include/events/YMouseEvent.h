@@ -33,7 +33,7 @@ private :
     
 public :
     YMouseEvent(Vec2 xy, MouseEventType met, MouseButton mb) 
-                : YEvent(EventType::MOUSE), xy(xy), met(met), mb(mb) {}
+                : YEvent(YEventType::MOUSE), xy(xy), met(met), mb(mb) {}
                 
     MouseEventType GetMeType() const { return met; }
     MouseButton GetButton() const { return mb; }
