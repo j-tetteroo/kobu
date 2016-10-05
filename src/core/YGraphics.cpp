@@ -46,7 +46,7 @@ void kobu::YGraphics::DrawText(uint32_t color, const char *text,
     this->canvas->save();
 
     paint.setAntiAlias(true);
-    paint.setColor(SK_ColorBLACK);
+    paint.setColor(color);
     
     this->canvas->translate(pos.x, pos.y);
     

@@ -15,9 +15,11 @@ class YButton : public YWidget
     
 private :
     std::string button_text_;
+    uint32_t color_;
 
 public :
     YButton(std::string text, Vec2 pos);
+    YButton(std::string text, uint32_t color, float x, float y);
     ~YButton();
     
     void Draw(YGraphics *g);

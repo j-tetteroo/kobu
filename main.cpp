@@ -237,9 +237,13 @@ int main(int argc, char** argv) {
 
     button_pos.x = button_pos.y = 400.0;
     std::string appelsap = "Appelsap";
+
     button = new kobu::YButton(appelsap, button_pos);
+    kobu::YButton *button2 = new kobu::YButton("flopsaaa", 0xFF00FF00, 300.0, 300.0);
+
     container = new kobu::YGuiContainer(clip_region);
     container->AddWidget(button);
+    container->AddWidget(button2);
 
     
     /* END KOBU */
@@ -273,8 +277,12 @@ int main(int argc, char** argv) {
     }
 
     delete button;
+    delete button2;
     delete container;
-    delete grContext;
+    delete graphics;
+    //delete surface;
+    //grContext.reset();
+    //delete grContext;
 
     //Destroy window
     SDL_DestroyWindow(window);
