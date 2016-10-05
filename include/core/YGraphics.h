@@ -25,6 +25,7 @@ public :
     void DrawRoundRect(uint32_t color, Vec2 pos, Vec2 wh, float r);
     void DrawRect(Vec2 pos, Vec2 wh);
     void DrawText(uint32_t color, const char *text, Vec2 pos);
+    void SetCanvas(SkCanvas *c);
 
 };
 

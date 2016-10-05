@@ -17,14 +17,14 @@
 #include "util/YTypes.h"
 
 
-kobu::YGraphics *graphics;
-kobu::YButton *button;
-kobu::YGuiContainer *container;
+    kobu::YGraphics *graphics;
+    kobu::YButton *button;
+    kobu::YGuiContainer *container;
 
         SDL_DisplayMode dm;
         sk_sp<SkSurface> surface;
         GrBackendRenderTargetDesc desc;
-        GrContext *grContext;
+        SkAutoTUnref<GrContext> *grContext;
         SkSurfaceProps *p;
 
 struct ApplicationState {
@@ -42,6 +42,29 @@ static void handle_error() {
     SkDebugf("SDL Error: %s\n", error);
     SDL_ClearError();
 }
+
+/*
+void drawButton(SkCanvas* canvas) {
+    canvas->save();
+    canvas->translate(SkIntToScalar(128), SkIntToScalar(128));
+    SkRect rect = SkRect::MakeXYWH(-90.5f, -90.5f, 181.0f, 181.0f);
+    SkRRect rrect;
+    rrect.setRectXY(rect, 20, 20);
+
+    SkPaint paint;
+    paint.setColor(SK_ColorBLUE);
+    canvas->drawRect(rect, paint);
+    paint.setColor(SK_ColorRED);
+    paint.setAntiAlias(true);
+    canvas->translate(SkIntToScalar(190), SkIntToScalar(190));
+    canvas->drawRRect(rrect, paint);
+    paint.setColor(SK_ColorBLACK);
+    canvas->translate(SkIntToScalar(10), SkIntToScalar(45));
+    canvas->drawText("appels", strlen("appels"), SkIntToScalar(0),
+                         SkIntToScalar(0), paint);
+    canvas->restore();
+}
+*/
 
 
 static void handle_events(ApplicationState* state, SkCanvas* canvas) {
@@ -101,9 +124,8 @@ static void handle_events(ApplicationState* state, SkCanvas* canvas) {
                     desc.fHeight = dm.h;
 
                     glViewport(0, 0, dm.w, dm.h);
-                    surface.reset();
-                    surface = SkSurface::MakeFromBackendRenderTarget((GrContext*)grContext, desc, p);
-                    //std::cout << "RESIZE" << "\n";
+                    surface = SkSurface::MakeFromBackendRenderTarget(grContext, desc, p);
+                    std::cout << "RESIZE" << "\n";
                 }
                 break;
             default:
@@ -119,7 +141,7 @@ int main(int argc, char** argv) {
 
     kobu::Vec2 button_pos;
     kobu::YRect clip_region;
-    //kobu::Vec2 test1, test2;
+    kobu::Vec2 test1, test2;
 
 
 
@@ -216,7 +238,7 @@ int main(int argc, char** argv) {
 
     //SkSurfaceProps props(SkSurfaceProps::kLegacyFontHost_InitType);
 
-    surface = SkSurface::MakeFromBackendRenderTarget((GrContext*)grContext, desc, p);
+    surface = SkSurface::MakeFromBackendRenderTarget(grContext, desc, p);
 
     SkCanvas* canvas = surface->getCanvas();
 
@@ -228,12 +250,11 @@ int main(int argc, char** argv) {
     clip_region.w = 400.0;
     clip_region.h = 400.0;
 
-    /*
     test1.x = 0.0;
     test1.y = 0.0;
     test2.x = 100.0;
     test2.y = 100.0;
-    */
+
 
     button_pos.x = button_pos.y = 400.0;
     std::string appelsap = "Appelsap";
@@ -245,24 +266,65 @@ int main(int argc, char** argv) {
     /* END KOBU */
     ApplicationState state;
 
+    //const char* helpMessage = "Click and drag to create rects.  Press esc to quit.";
 
     SkPaint paint;
 
-    // Main Loop 
-    while (!state.fQuit) { // Our application loop
-        handle_events(&state, canvas);
+    // create a surface for CPU rasterization
+    sk_sp<SkSurface> cpuSurface(SkSurface::MakeRaster(canvas->imageInfo()));
+/*
+    SkCanvas* offscreen = cpuSurface->getCanvas();
+    offscreen->save();
+    offscreen->translate(50.0f, 50.0f);
+    offscreen->drawPath(create_star(), paint);
+    offscreen->restore();
+*/
+    sk_sp<SkImage> image = cpuSurface->makeImageSnapshot();
 
+    //int rotation = 0;
+ 
+    while (!state.fQuit) { // Our application loop
+        
+        SkRandom rand;
         canvas = surface->getCanvas();
         graphics->SetCanvas(canvas);
 
         canvas->clear(SK_ColorWHITE);
-
+        handle_events(&state, canvas);
+        /*
+        paint.setColor(SK_ColorBLACK);
+        paint.setAntiAlias(true);
+        canvas->drawText(helpMessage, strlen(helpMessage), SkIntToScalar(100),
+                         SkIntToScalar(100), paint);
+        paint.setAntiAlias(false);
+        canvas->drawText(helpMessage, strlen(helpMessage), SkIntToScalar(100),
+                         SkIntToScalar(120), paint);
 
         canvas->save();
-
-        //graphics->DrawRoundRect(0xFF00FF00, test1, test2, 10.0);
+        for (int i = 0; i < state.fRects.count(); i++) {
+            paint.setColor(rand.nextU() | 0x44808080);
+            canvas->drawRect(state.fRects[i], paint);
+        }
+        canvas->restore();
         container->Draw(graphics);
-
+        */
+        canvas->save();
+        //canvas->translate(0.0, 25.0);
+            graphics->DrawRoundRect(0xFF00FF00, test1, test2, 10.0);
+        //drawButton(canvas);
+        /*
+        graphics->DrawRoundRect(kobu::Y2DCoord(10, 100), 
+            kobu::Y2DCoord(100,100), 10);
+        graphics->DrawText("Splop", kobu::Y2DCoord(300, 300));
+        */
+        // draw offscreen canvas
+        /*
+        canvas->save();
+        canvas->translate(dm.w / 2.0, dm.h / 2.0);
+        canvas->rotate(rotation++);
+        canvas->drawImage(image, -50.0f, -50.0f);
+        canvas->restore();
+        */
         canvas->restore();
         canvas->flush();
         SDL_GL_SwapWindow(window);
@@ -274,7 +336,6 @@ int main(int argc, char** argv) {
 
     delete button;
     delete container;
-    delete grContext;
 
     //Destroy window
     SDL_DestroyWindow(window);
