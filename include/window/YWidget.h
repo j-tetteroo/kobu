@@ -27,9 +27,9 @@ public :
     YWidget(Vec2 pos) : pos_(pos) {}
     virtual ~YWidget() {};
     virtual void Draw(YGraphics *g) = 0;
-    virtual YRect GetBounds() = 0;
+    virtual YRect GetBounds(void) = 0;
     virtual void TriggerEvent(YEvent *e) = 0;
-    WidgetState GetState() const { return state_; }
+    WidgetState GetState(void) const { return state_; }
     
 
 };

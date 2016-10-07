@@ -35,9 +35,9 @@ public :
     YMouseEvent(Vec2 xy, MouseEventType met, MouseButton mb) 
                 : YEvent(YEventType::MOUSE), xy(xy), met(met), mb(mb) {}
                 
-    MouseEventType GetMeType() const { return met; }
-    MouseButton GetButton() const { return mb; }
-    Vec2 GetXY() const { return xy; }
+    MouseEventType GetMeType(void) const { return met; }
+    MouseButton GetButton(void) const { return mb; }
+    Vec2 GetXY(void) const { return xy; }
     
 };
 

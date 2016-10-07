@@ -14,12 +14,14 @@
 #include "widgets/YButton.h"
 #include "events/YMouseEvent.h"
 #include "window/YGuiContainer.h"
+#include "window/YDefaultWindow.h"
 #include "util/YTypes.h"
 
 
 kobu::YGraphics *graphics;
 kobu::YButton *button;
 kobu::YGuiContainer *container;
+kobu::YDefaultWindow *kobuWin;
 
         SDL_DisplayMode dm;
         sk_sp<SkSurface> surface;
@@ -245,6 +247,7 @@ int main(int argc, char** argv) {
     container->AddWidget(button);
     container->AddWidget(button2);
 
+    kobuWin = new kobu::YDefaultWindow(clip_region, container);
     
     /* END KOBU */
     ApplicationState state;
@@ -265,7 +268,8 @@ int main(int argc, char** argv) {
         canvas->save();
 
         //graphics->DrawRoundRect(0xFF00FF00, test1, test2, 10.0);
-        container->Draw(graphics);
+        //container->Draw(graphics);
+        kobuWin->Draw(graphics);
 
         canvas->restore();
         canvas->flush();

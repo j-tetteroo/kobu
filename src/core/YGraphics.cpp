@@ -16,6 +16,22 @@ kobu::YGraphics::~YGraphics(void) {
 
 }
 
+void kobu::YGraphics::DrawRect(YRect r) {
+    SkPaint paint;
+    SkRect rect = SkRect::MakeXYWH(0.0, 0.0, r.w, r.h);
+        
+    //paint.setColor(SK_ColorRED);
+    //this->canvas->drawRect(rect, paint);
+    
+    paint.setColor(SK_ColorBLACK);
+    paint.setAntiAlias(true);
+        
+    this->canvas->save();
+    this->canvas->translate(r.x, r.y);
+    this->canvas->drawRect(rect, paint);
+    this->canvas->restore();
+}
+
 void kobu::YGraphics::DrawRoundRect(uint32_t color, kobu::Vec2 pos, 
     kobu::Vec2 wh, float r) {
     

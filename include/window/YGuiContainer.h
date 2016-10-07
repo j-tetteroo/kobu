@@ -31,11 +31,9 @@ public :
     void Draw(YGraphics *g);
     void Resize(YRect bounds);
     void TriggerEvent(YEvent *e);
-    YRect GetBounds();
-
 
     void SetLayout(YLayout *l);
-    YLayout *Getlayout();
+    YLayout *Getlayout(void);
 
 };
 

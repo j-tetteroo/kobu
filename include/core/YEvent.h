@@ -18,7 +18,7 @@ private :
 
 public :
     YEvent(YEventType e) : et(e) {}
-    YEventType GetType() const { return et; }
+    YEventType GetType(void) const { return et; }
     
 };
 

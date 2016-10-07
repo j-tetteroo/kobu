@@ -23,7 +23,7 @@ public :
     ~YButton();
     
     void Draw(YGraphics *g);
-    YRect GetBounds();
+    YRect GetBounds(void);
     void TriggerEvent(YEvent *e);
 	void HandleMouseEvent(YMouseEvent *e);
 

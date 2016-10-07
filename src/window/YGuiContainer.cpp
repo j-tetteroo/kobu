@@ -57,9 +57,6 @@ void kobu::YGuiContainer::HandleMouseEvent(YMouseEvent *e) {
 	}
 }
 
-kobu::YRect kobu::YGuiContainer::GetBounds() {
-	return bounds_;
-}
 
 void kobu::YGuiContainer::SetLayout(YLayout *l) {
 	layout_ = l;
