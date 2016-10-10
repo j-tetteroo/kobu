@@ -16,6 +16,8 @@
 #include "window/YGuiContainer.h"
 #include "window/YDefaultWindow.h"
 #include "util/YTypes.h"
+#include "widgets/YWindowDecorator.h"
+#include "widgets/YDefaultWindowDecorator.h"
 
 
 kobu::YGraphics *graphics;
@@ -240,14 +242,17 @@ int main(int argc, char** argv) {
     button_pos.x = button_pos.y = 400.0;
     std::string appelsap = "Appelsap";
 
-    button = new kobu::YButton(appelsap, button_pos);
+    button = new kobu::YButton(appelsap, 0xFFFF0000, 400.0, 400.0);
     kobu::YButton *button2 = new kobu::YButton("flopsaaa", 0xFF00FF00, 300.0, 300.0);
 
-    container = new kobu::YGuiContainer(clip_region);
+    container = new kobu::YGuiContainer(clip_region, clip_region);
+    kobu::YWindowDecorator *decorator = new kobu::YDefaultWindowDecorator(clip_region);
+
+
+    kobuWin = new kobu::YDefaultWindow(clip_region, container, decorator);
     container->AddWidget(button);
     container->AddWidget(button2);
 
-    kobuWin = new kobu::YDefaultWindow(clip_region, container);
     
     /* END KOBU */
     ApplicationState state;

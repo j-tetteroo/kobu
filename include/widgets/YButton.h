@@ -18,12 +18,10 @@ private :
     uint32_t color_;
 
 public :
-    YButton(std::string text, Vec2 pos);
     YButton(std::string text, uint32_t color, float x, float y);
     ~YButton();
     
     void Draw(YGraphics *g);
-    YRect GetBounds(void);
     void TriggerEvent(YEvent *e);
 	void HandleMouseEvent(YMouseEvent *e);
 

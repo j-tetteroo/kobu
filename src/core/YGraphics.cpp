@@ -24,7 +24,9 @@ void kobu::YGraphics::DrawRect(YRect r) {
     //this->canvas->drawRect(rect, paint);
     
     paint.setColor(SK_ColorBLACK);
-    paint.setAntiAlias(true);
+    paint.setAntiAlias(false);
+    paint.setStyle(SkPaint::kStroke_Style);
+    paint.setStrokeWidth(0);
         
     this->canvas->save();
     this->canvas->translate(r.x, r.y);
@@ -32,11 +34,10 @@ void kobu::YGraphics::DrawRect(YRect r) {
     this->canvas->restore();
 }
 
-void kobu::YGraphics::DrawRoundRect(uint32_t color, kobu::Vec2 pos, 
-    kobu::Vec2 wh, float r) {
+void kobu::YGraphics::DrawRoundRect(uint32_t color, float x, float y, float w, float h, float r) {
     
     SkPaint paint;
-    SkRect rect = SkRect::MakeXYWH(0.0, 0.0, wh.x, wh.y);
+    SkRect rect = SkRect::MakeXYWH(0.0, 0.0, w, h);
         
     //paint.setColor(SK_ColorRED);
     //this->canvas->drawRect(rect, paint);
@@ -45,15 +46,14 @@ void kobu::YGraphics::DrawRoundRect(uint32_t color, kobu::Vec2 pos,
     paint.setAntiAlias(true);
         
     this->canvas->save();
-    this->canvas->translate(pos.x, pos.y);
+    this->canvas->translate(x, y);
     SkRRect rrect;
     rrect.setRectXY(rect, r, r);
     this->canvas->drawRRect(rrect, paint);
     this->canvas->restore();
 }
 
-void kobu::YGraphics::DrawText(uint32_t color, const char *text, 
-    kobu::Vec2 pos) {
+void kobu::YGraphics::DrawText(uint32_t color, const char *text, float x, float y) {
     
     
     // Render with Skia
@@ -64,7 +64,7 @@ void kobu::YGraphics::DrawText(uint32_t color, const char *text,
     paint.setAntiAlias(true);
     paint.setColor(color);
     
-    this->canvas->translate(pos.x, pos.y);
+    this->canvas->translate(x, y);
     
     this->canvas->drawText(text, strlen(text), SkIntToScalar(0),
                          SkIntToScalar(0), paint);

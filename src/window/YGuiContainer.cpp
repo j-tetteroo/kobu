@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-kobu::YGuiContainer::YGuiContainer(YRect clip_region) : YContainer(clip_region) {
+kobu::YGuiContainer::YGuiContainer(YRect bounds, YRect clip_region) : YContainer(bounds, clip_region) {
 
 
 }

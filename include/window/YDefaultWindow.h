@@ -11,8 +11,9 @@ class YDefaultWindow : public YWindow
 {
 
 public :
-    YDefaultWindow(YRect w, YContainer *c);
+    YDefaultWindow(YRect w, YContainer *c, YWindowDecorator *d);
     ~YDefaultWindow(void);
+    
     void Draw(YGraphics *g);
     void Resize(YRect bounds);
     void TriggerEvent(YEvent *e);

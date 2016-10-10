@@ -24,7 +24,7 @@ private :
 
 
 public :
-	YGuiContainer(YRect clip_region);
+	YGuiContainer(YRect bounds, YRect clip_region);
     ~YGuiContainer(void);
     
     void AddWidget(YWidget *w);

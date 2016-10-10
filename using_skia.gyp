@@ -26,7 +26,8 @@
         'src/core/YGraphics.cpp',
         'src/widgets/YButton.cpp',
         'src/window/YGuiContainer.cpp',
-        'src/window/YDefaultWindow.cpp'
+        'src/window/YDefaultWindow.cpp',
+        'src/widgets/YDefaultWindowDecorator.cpp'
   
       ],
       'ldflags': [

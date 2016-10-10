@@ -22,9 +22,9 @@ public :
     ~YGraphics(void);
     
     
-    void DrawRoundRect(uint32_t color, Vec2 pos, Vec2 wh, float r);
+    void DrawRoundRect(uint32_t color, float x, float y, float w, float h, float r);
     void DrawRect(YRect r);
-    void DrawText(uint32_t color, const char *text, Vec2 pos);
+    void DrawText(uint32_t color, const char *text, float x, float y);
     void SetCanvas(SkCanvas *c);
 
 };

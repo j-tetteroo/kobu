@@ -14,22 +14,24 @@ class YWidget
     
 private :
 
-protected :
-    Vec2 pos_;
-    Vec2 wh_;
+    YRect bounds_;
     WidgetState state_;
 
 
 public :
     YWidget() {
-    	pos_.x = pos_.y = 0.0;
+    	bounds_.x = bounds_.y = bounds_.w = bounds_.h = 0.0;
     }
-    YWidget(Vec2 pos) : pos_(pos) {}
+    YWidget(YRect bounds) : bounds_(bounds) {}
     virtual ~YWidget() {};
+
     virtual void Draw(YGraphics *g) = 0;
-    virtual YRect GetBounds(void) = 0;
     virtual void TriggerEvent(YEvent *e) = 0;
+
+    void SetState(WidgetState state) { state_ =  state; }
     WidgetState GetState(void) const { return state_; }
+    YRect GetBounds(void) const { return bounds_; }
+    void SetBounds(YRect bounds) { bounds_ = bounds; }
     
 
 };
