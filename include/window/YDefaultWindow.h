@@ -4,6 +4,7 @@
 #include <climits>
 
 #include "core/YWindow.h"
+#include "widgets/YDefaultWindowDecorator.h"
 
 namespace kobu {
 
@@ -11,7 +12,7 @@ class YDefaultWindow : public YWindow
 {
 
 public :
-    YDefaultWindow(YRect w, YContainer *c, YWindowDecorator *d);
+    YDefaultWindow(YRect w, YContainer *c, YDefaultWindowDecorator *d);
     ~YDefaultWindow(void);
     
     void Draw(YGraphics *g);

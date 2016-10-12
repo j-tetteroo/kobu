@@ -28,6 +28,9 @@ public :
     void DrawWindowEdge(YGraphics *g);
     YRect GetContainerSize(YRect bounds);
 
+    float GetEdgeWidth(void);
+    float GetTitleBarHeight(void);
+
 };
 
 } // namespace kobu

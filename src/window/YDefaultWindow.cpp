@@ -3,7 +3,14 @@
 #include "window/YGuiContainer.h"
 
 
-kobu::YDefaultWindow::YDefaultWindow(YRect w, YContainer *c, YWindowDecorator *d) : YWindow(w, c, d) {
+kobu::YDefaultWindow::YDefaultWindow(YRect w, YContainer *c, YDefaultWindowDecorator *d) : 	YWindow(w, c, (YWindowDecorator *)d) {
+	YRect bounds;
+	bounds.x = w.x - d->GetEdgeWidth();
+	bounds.y = w.y - d->GetEdgeWidth() - d->GetTitleBarHeight();
+	bounds.w = w.w + d->GetEdgeWidth();
+	bounds.h = w.h + d->GetEdgeWidth();
+
+	SetBounds(bounds);
 
 }
 

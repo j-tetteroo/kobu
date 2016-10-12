@@ -18,6 +18,8 @@
 #include "util/YTypes.h"
 #include "widgets/YWindowDecorator.h"
 #include "widgets/YDefaultWindowDecorator.h"
+#include "window/YLayout.h"
+#include "layout/YAbsoluteLayout.h"
 
 
 kobu::YGraphics *graphics;
@@ -239,19 +241,26 @@ int main(int argc, char** argv) {
     test2.y = 100.0;
     */
 
+    kobu::YLayout *absLayout;
+
     button_pos.x = button_pos.y = 400.0;
     std::string appelsap = "Appelsap";
 
     button = new kobu::YButton(appelsap, 0xFFFF0000, 400.0, 400.0);
     kobu::YButton *button2 = new kobu::YButton("flopsaaa", 0xFF00FF00, 300.0, 300.0);
 
-    container = new kobu::YGuiContainer(clip_region, clip_region);
-    kobu::YWindowDecorator *decorator = new kobu::YDefaultWindowDecorator(clip_region);
+    absLayout = new kobu::YAbsoluteLayout();
+    container = new kobu::YGuiContainer(clip_region, clip_region, absLayout);
+
+
+    kobu::YDefaultWindowDecorator *decorator = new kobu::YDefaultWindowDecorator(clip_region);
 
 
     kobuWin = new kobu::YDefaultWindow(clip_region, container, decorator);
     container->AddWidget(button);
     container->AddWidget(button2);
+    container->SetLayout(absLayout);
+    container->Layout();
 
     
     /* END KOBU */
@@ -289,6 +298,7 @@ int main(int argc, char** argv) {
     delete button2;
     delete container;
     delete graphics;
+    delete absLayout;
     //delete surface;
     //grContext.reset();
     //delete grContext;

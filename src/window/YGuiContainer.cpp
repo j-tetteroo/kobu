@@ -1,9 +1,13 @@
-#include "window/YGuiContainer.h"
 #include <iostream>
 
+#include "window/YContainer.h"
+#include "window/YGuiContainer.h"
 
-kobu::YGuiContainer::YGuiContainer(YRect bounds, YRect clip_region) : YContainer(bounds, clip_region) {
 
+kobu::YGuiContainer::YGuiContainer(YRect bounds, YRect clip_region, YLayout *l) : YContainer(bounds, clip_region), layout_(l) {
+
+	layout_->SetWidgets(&widgets_);
+	layout_->SetBounds(bounds);
 
 }
 
@@ -23,6 +27,10 @@ void kobu::YGuiContainer::Draw(YGraphics *g) {
 		w->Draw(g);
 	}
 
+}
+
+void kobu::YGuiContainer::Layout() {
+	layout_->Layout();
 }
 
 void kobu::YGuiContainer::Resize(YRect bounds) {
@@ -58,10 +66,3 @@ void kobu::YGuiContainer::HandleMouseEvent(YMouseEvent *e) {
 }
 
 
-void kobu::YGuiContainer::SetLayout(YLayout *l) {
-	layout_ = l;
-}
-
-kobu::YLayout* kobu::YGuiContainer::Getlayout() {
-	return layout_;
-}

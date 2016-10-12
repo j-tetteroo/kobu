@@ -20,6 +20,7 @@ public :
 
     virtual void Draw(YGraphics *g)=0;
     virtual void Resize(YRect bounds)=0;
+    virtual void Layout()=0;
     virtual void TriggerEvent(YEvent *e)=0;
 
     YRect GetClipRegion(void) { return clip_region_; } 

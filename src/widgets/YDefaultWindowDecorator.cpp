@@ -59,3 +59,12 @@ kobu::YRect kobu::YDefaultWindowDecorator::GetContainerSize(YRect bounds) {
 }
 
 
+float kobu::YDefaultWindowDecorator::GetEdgeWidth(void) {
+	return EDGE_W;
+}
+
+
+float kobu::YDefaultWindowDecorator::GetTitleBarHeight(void) {
+	return BAR_H;
+
+}
