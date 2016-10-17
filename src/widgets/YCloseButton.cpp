@@ -4,13 +4,24 @@
 #include "core/YGraphics.h"
 #include <iostream>
 
+kobu::YCloseButton::YCloseButton(YWindow *parent, float x, float y) : YWidget() {
+
+	YRect b;
+	b.x = x;
+	b.y = y;
+	b.w = 20.0;
+	b.h = 20.0;
+	SetBounds(b);
+}
+
+kobu::YCloseButton::~YCloseButton() {
+
+}
 
 void kobu::YCloseButton::Draw(YGraphics *g) {
 
 	YRect b = GetBounds();
-    g->DrawRoundRect(color_, b.x, b.y, b.w, b.h, 10.0);
-    g->DrawText(0xFFFFFFFF, button_text_.c_str(), b.x+10.0, b.y+20.0);
-
+    g->DrawRect(0xFF000000, b.x, b.y, b.w, b.h);
 }
 
 
@@ -36,17 +47,5 @@ void kobu::YCloseButton::HandleMouseEvent(YMouseEvent *e) {
 	}
 }
 
-kobu::YCloseButton::YCloseButton(YWindow *parent, float x, float y) : YWidget() {
 
-	YRect b;
-	b.x = x;
-	b.y = y;
-	b.w = 20.0;
-	b.h = 20.0;
-	SetBounds(b);
-}
-
-kobu::YCloseButton::~YCloseButton() {
-
-}
 

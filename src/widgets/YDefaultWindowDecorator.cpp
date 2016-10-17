@@ -1,11 +1,40 @@
+#include <iostream>
+#include <algorithm>
+
 #include "widgets/YDefaultWindowDecorator.h"
 #include "util/YTypes.h"
 
+
+// decorator dimensions
 const float EDGE_W = 1.0;
 const float BAR_H = 20.0;
 
-kobu::YDefaultWindowDecorator::YDefaultWindowDecorator(YRect bounds) : YWindowDecorator(bounds) {
+// close button position
+const float BPOS_OFFSET_X = 10.0;
+const float BPOS_OFFSET_Y = 5.0;
 
+kobu::YDefaultWindowDecorator::YDefaultWindowDecorator(YWindow *parent) 
+	: YWindowDecorator(parent) {
+
+
+	//YRect bounds = GetParent()->GetBounds();
+
+	/*
+	close_button_ = new YCloseButton(, 
+		max(bounds.x + bounds.w - BPOS_OFFSET_X, bounds.x),
+		max(bounds.y + BPOS_OFFSET_Y, bounds.y));
+	*/
+
+	//SetBounds(bounds);
+
+	// Adjust bounds for decorator
+	/*
+	bounds_.x = std::min(bounds.x + EDGE_W,
+	bounds_.w = std::max(bounds.w - EDGE_W, bounds.x + EDGE_W + EDGE_W);
+
+	bounds_.y = std::min(bounds.y + BAR_H + EDGE_W, bounds.y + bounds.h - EDGE_W - EDGE_W);
+	bounds_.h = std::max(bounds.h - EDGE_W, bounds.y + EDGE_W + BAR_H + EDGE_W);
+	*/
 }
 
 
@@ -16,13 +45,29 @@ kobu::YDefaultWindowDecorator::~YDefaultWindowDecorator() {
 
 
 void kobu::YDefaultWindowDecorator::Draw(YGraphics *g) {
+
 	DrawTitleBar(g);
 	DrawWindowEdge(g);
 
+	g->Push();
+		g->Translate(EDGE_W, EDGE_W+BAR_H);
+		GetParent()->Draw(g);
+	g->Pop();
 }
 
 void kobu::YDefaultWindowDecorator::TriggerEvent(YEvent *e) {
+	switch(e->GetType()) {
+		case YEventType::MOUSE:
+			HandleMouseEvent((YMouseEvent *)e);
+			break;
+		default:
+			return;
+	}
+}
 
+void kobu::YDefaultWindowDecorator::Resize(YRect bounds) {
+
+    GetParent()->Resize(bounds);
 }
 
 void kobu::YDefaultWindowDecorator::DrawTitleBar(YGraphics *g) {
@@ -30,31 +75,66 @@ void kobu::YDefaultWindowDecorator::DrawTitleBar(YGraphics *g) {
 	YRect bounds;
 	YRect new_bounds;
 
-	bounds = GetBounds();
+	bounds = GetParent()->GetBounds();
 
 	new_bounds.x = bounds.x;
 	new_bounds.y = bounds.y;
-	new_bounds.w = bounds.w;
+	new_bounds.w = bounds.w+(EDGE_W*2.0);
 	new_bounds.h = BAR_H;
 
 	g->DrawRect(new_bounds);
 }
 
-void kobu::YDefaultWindowDecorator::DrawWindowEdge(YGraphics *g) {
-	g->DrawRect(GetBounds());
+bool kobu::YDefaultWindowDecorator::DecoratorHit(YMouseEvent *e) {
+	YRect b = this->GetBounds();
+	Vec2 hit = e->GetXY();
+
+	float edge_width = GetEdgeWidth();
+	float title_height = GetTitleBarHeight();
+
+	// TODO: clean up if statements
+	if (hit.x <= edge_width || hit.x >= b.w - edge_width) {
+		return true;
+	}
+
+	if (hit.y <= edge_width+title_height || hit.y >= b.h - edge_width) {
+		return true;
+	}
+
+	return false;
 
 }
 
-kobu::YRect kobu::YDefaultWindowDecorator::GetContainerSize(YRect bounds) {
+void kobu::YDefaultWindowDecorator::HandleMouseEvent(YMouseEvent *e) {
 
-	// TODO: move to constructor as data member so can be immediately returned
+	Vec2 xy = e->GetXY();
+
+	if (DecoratorHit(e)) {
+		// WindowDecorator hit
+		if (close_button_->CheckHit(xy)) {
+			// Close window
+			std::cout << "Close window\n";
+		}
+	} else {
+		// Window hit
+		GetParent()->TriggerEvent(e);
+	}
+
+}
+
+
+void kobu::YDefaultWindowDecorator::DrawWindowEdge(YGraphics *g) {
+	YRect bounds;
 	YRect new_bounds;
-	new_bounds.x = bounds.x - EDGE_W;
-	new_bounds.y = bounds.y + (BAR_H);
-	new_bounds.w = bounds.w - (EDGE_W*2.0);
-	new_bounds.h = bounds.h - (BAR_H) - (EDGE_W*2.0);
 
-	return new_bounds;
+	bounds = GetParent()->GetBounds();
+
+	new_bounds.x = bounds.x;
+	new_bounds.y = bounds.y;
+	new_bounds.w = bounds.w+(EDGE_W*2.0);
+	new_bounds.h = bounds.h+BAR_H+(EDGE_W*2.0);
+
+	g->DrawRect(new_bounds);
 
 }
 
@@ -67,4 +147,8 @@ float kobu::YDefaultWindowDecorator::GetEdgeWidth(void) {
 float kobu::YDefaultWindowDecorator::GetTitleBarHeight(void) {
 	return BAR_H;
 
+}
+
+void kobu::YDefaultWindowDecorator::Destroy() {
+	GetParent()->Destroy();
 }

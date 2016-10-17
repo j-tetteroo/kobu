@@ -76,7 +76,7 @@ static void handle_events(ApplicationState* state, SkCanvas* canvas) {
                 coords.y = event.button.y;
                 std::cout << event.button.x << " " << event.button.y << "\n";
                 me = new kobu::YMouseEvent(coords, kobu::MouseEventType::M_DOWN , kobu::MouseButton::M_LEFT);
-                container->TriggerEvent((kobu::YEvent *)me);
+                kobuWin->TriggerEvent((kobu::YEvent *)me);
                 delete me;
                 
                 
@@ -85,7 +85,7 @@ static void handle_events(ApplicationState* state, SkCanvas* canvas) {
                 coords.x = event.button.x;
                 coords.y = event.button.y;
                 me = new kobu::YMouseEvent(coords, kobu::MouseEventType::M_UP , kobu::MouseButton::M_LEFT);
-                container->TriggerEvent((kobu::YEvent *)me);
+                kobuWin->TriggerEvent((kobu::YEvent *)me);
                 delete me;
                 break;
             case SDL_KEYDOWN: {
@@ -243,20 +243,20 @@ int main(int argc, char** argv) {
 
     kobu::YLayout *absLayout;
 
-    button_pos.x = button_pos.y = 400.0;
+    button_pos.x = button_pos.y = 20.0;
     std::string appelsap = "Appelsap";
 
-    button = new kobu::YButton(appelsap, 0xFFFF0000, 400.0, 400.0);
-    kobu::YButton *button2 = new kobu::YButton("flopsaaa", 0xFF00FF00, 300.0, 300.0);
+    button = new kobu::YButton(appelsap, 0xFFFF0000, 40.0, 40.0);
+    kobu::YButton *button2 = new kobu::YButton("flopsaaa", 0xFF00FF00, 170.0, 30.0);
 
     absLayout = new kobu::YAbsoluteLayout();
     container = new kobu::YGuiContainer(clip_region, clip_region, absLayout);
 
+    kobuWin = new kobu::YDefaultWindow(container, clip_region);
+    kobu::YDefaultWindowDecorator *decorator = new kobu::YDefaultWindowDecorator(kobuWin);
 
-    kobu::YDefaultWindowDecorator *decorator = new kobu::YDefaultWindowDecorator(clip_region);
 
 
-    kobuWin = new kobu::YDefaultWindow(clip_region, container, decorator);
     container->AddWidget(button);
     container->AddWidget(button2);
     container->SetLayout(absLayout);
@@ -283,7 +283,7 @@ int main(int argc, char** argv) {
 
         //graphics->DrawRoundRect(0xFF00FF00, test1, test2, 10.0);
         //container->Draw(graphics);
-        kobuWin->Draw(graphics);
+        decorator->Draw(graphics);
 
         canvas->restore();
         canvas->flush();
@@ -299,6 +299,7 @@ int main(int argc, char** argv) {
     delete container;
     delete graphics;
     delete absLayout;
+    delete kobuWin;
     //delete surface;
     //grContext.reset();
     //delete grContext;

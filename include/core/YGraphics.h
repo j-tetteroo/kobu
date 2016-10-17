@@ -14,7 +14,7 @@ namespace kobu {
 class YGraphics
 {
 private :
-    SkCanvas *canvas;
+    SkCanvas *canvas_;
     
 
 public :
@@ -26,6 +26,10 @@ public :
     void DrawRect(YRect r);
     void DrawText(uint32_t color, const char *text, float x, float y);
     void SetCanvas(SkCanvas *c);
+
+    void Push();
+    void Pop();
+    void Translate(float x, float y);
 
 };
 

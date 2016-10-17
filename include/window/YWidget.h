@@ -42,6 +42,18 @@ public :
     float GetMargin(void) const { return margin_; }
     void SetMargin(float m) { margin_ = m; }
 
+    // events
+
+    // Check if coordinates fall in widget bounds
+    bool CheckHit(Vec2 hit) {
+        if (hit.x >= bounds_.x && hit.x <= (bounds_.x+bounds_.w) && hit.y >= bounds_.y && hit.y <= (bounds_.y+bounds_.h)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 };
 
 } // namespace kobu

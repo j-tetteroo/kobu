@@ -8,7 +8,7 @@
 #include "core/YGraphics.h"
 #include "util/YTypes.h"
 
-kobu::YGraphics::YGraphics(SkCanvas *c) : canvas(c) {
+kobu::YGraphics::YGraphics(SkCanvas *c) : canvas_(c) {
 
 }
 
@@ -28,10 +28,10 @@ void kobu::YGraphics::DrawRect(YRect r) {
     paint.setStyle(SkPaint::kStroke_Style);
     paint.setStrokeWidth(0);
         
-    this->canvas->save();
-    this->canvas->translate(r.x, r.y);
-    this->canvas->drawRect(rect, paint);
-    this->canvas->restore();
+    canvas_->save();
+    canvas_->translate(r.x, r.y);
+    canvas_->drawRect(rect, paint);
+    canvas_->restore();
 }
 
 void kobu::YGraphics::DrawRoundRect(uint32_t color, float x, float y, float w, float h, float r) {
@@ -45,12 +45,12 @@ void kobu::YGraphics::DrawRoundRect(uint32_t color, float x, float y, float w, f
     paint.setColor(color);
     paint.setAntiAlias(true);
         
-    this->canvas->save();
-    this->canvas->translate(x, y);
+    canvas_->save();
+    canvas_->translate(x, y);
     SkRRect rrect;
     rrect.setRectXY(rect, r, r);
-    this->canvas->drawRRect(rrect, paint);
-    this->canvas->restore();
+    canvas_->drawRRect(rrect, paint);
+    canvas_->restore();
 }
 
 void kobu::YGraphics::DrawText(uint32_t color, const char *text, float x, float y) {
@@ -59,20 +59,29 @@ void kobu::YGraphics::DrawText(uint32_t color, const char *text, float x, float 
     // Render with Skia
     // TODO: add harfbuzz support
     SkPaint paint;
-    this->canvas->save();
+    canvas_->save();
 
     paint.setAntiAlias(true);
     paint.setColor(color);
     
-    this->canvas->translate(x, y);
+    canvas_->translate(x, y);
     
-    this->canvas->drawText(text, strlen(text), SkIntToScalar(0),
+    canvas_->drawText(text, strlen(text), SkIntToScalar(0),
                          SkIntToScalar(0), paint);
-    this->canvas->restore();
+    canvas_->restore();
 
     
 }
 
 void kobu::YGraphics::SetCanvas(SkCanvas *c) {
-    this->canvas = c;
+    canvas_ = c;
+}
+void kobu::YGraphics::Push() {
+    canvas_->save();
+}
+void kobu::YGraphics::Pop() {
+    canvas_->restore();
+}
+void kobu::YGraphics::Translate(float x, float y) {
+    canvas_->translate(x, y);
 }

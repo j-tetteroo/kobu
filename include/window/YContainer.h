@@ -13,6 +13,10 @@ class YContainer : public YWidget
 
 private :
 	YRect clip_region_;
+	YSpace padding_;
+
+
+    // TODO: scrollbars
 
 public :
     YContainer(YRect bounds, YRect clip_region) : YWidget(bounds), clip_region_(clip_region) { }
@@ -20,6 +24,7 @@ public :
 
     virtual void Draw(YGraphics *g)=0;
     virtual void Resize(YRect bounds)=0;
+    virtual void Scroll(float x_offset, float y_offset)=0;
     virtual void Layout()=0;
     virtual void TriggerEvent(YEvent *e)=0;
 

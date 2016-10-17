@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 
 #include "window/YContainer.h"
 #include "window/YGuiContainer.h"
@@ -23,10 +24,20 @@ void kobu::YGuiContainer::AddWidget(YWidget *w) {
 
 void kobu::YGuiContainer::Draw(YGraphics *g) {
 
+	// TODO: Translate padding
 	for (YWidget *w : widgets_) {
 		w->Draw(g);
 	}
 
+}
+
+void kobu::YGuiContainer::Scroll(float x_offset, float y_offset) {
+
+	YRect c = GetClipRegion();
+	YRect b = GetBounds();
+	c.x = std::min(std::max(c.x+x_offset, b.x), b.x+b.w);
+	c.y = std::min(std::max(c.y+y_offset, b.y), b.y+b.h);
+	SetClipRegion(c);
 }
 
 void kobu::YGuiContainer::Layout() {
@@ -50,14 +61,10 @@ void kobu::YGuiContainer::TriggerEvent(YEvent *e) {
 
 void kobu::YGuiContainer::HandleMouseEvent(YMouseEvent *e) {
 	Vec2 hit = e->GetXY();
-	YRect dim;
 
 	// Iterate over widgets to find hit
 	for (YWidget *it : widgets_) {
-		dim = it->GetBounds();
-		std::cout << "Bounds " << dim.x << " " << dim.y << " " << dim.w << " " << dim.h << "\n";
-		if (hit.x >= dim.x && hit.x <= (dim.x+dim.w) && hit.y >= dim.y && hit.y <= (dim.y+dim.h)) {
-            // Hit
+		if (it->CheckHit(hit)) {
             std::cout << "Hit\n";
             it->TriggerEvent((YEvent *)e);
             break;

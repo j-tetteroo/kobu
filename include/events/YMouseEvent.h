@@ -27,17 +27,18 @@ class YMouseEvent : public YEvent
 {
     
 private :
-    Vec2 xy;
-    MouseEventType met;
-    MouseButton mb;
+    Vec2 xy_;
+    MouseEventType met_;
+    MouseButton mb_;
     
 public :
     YMouseEvent(Vec2 xy, MouseEventType met, MouseButton mb) 
-                : YEvent(YEventType::MOUSE), xy(xy), met(met), mb(mb) {}
+                :  YEvent(YEventType::MOUSE), xy_(xy), met_(met), mb_(mb) {}
                 
-    MouseEventType GetMeType(void) const { return met; }
-    MouseButton GetButton(void) const { return mb; }
-    Vec2 GetXY(void) const { return xy; }
+    MouseEventType GetMeType(void) const { return met_; }
+    MouseButton GetButton(void) const { return mb_; }
+    Vec2 GetXY(void) const { return xy_; }
+    void SetXY(Vec2 xy) { xy_ = xy; }
     
 };
 

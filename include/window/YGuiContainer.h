@@ -30,6 +30,7 @@ public :
     void AddWidget(YWidget *w);
     void Draw(YGraphics *g);
     void Resize(YRect bounds);
+    void Scroll(float x_offset, float y_offset);
     void TriggerEvent(YEvent *e);
     void Layout();
 
