@@ -28,7 +28,8 @@
         'src/window/YGuiContainer.cpp',
         'src/window/YDefaultWindow.cpp',
         'src/widgets/YDefaultWindowDecorator.cpp',
-	'src/layout/YAbsoluteLayout.cpp'
+	'src/layout/YAbsoluteLayout.cpp',
+        'src/widgets/YCloseButton.cpp'
   
       ],
       'ldflags': [

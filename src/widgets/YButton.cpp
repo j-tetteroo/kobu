@@ -7,7 +7,7 @@
 void kobu::YButton::Draw(YGraphics *g) {
 
 	YRect b = GetBounds();
-    g->DrawRoundRect(color_, b.x, b.y, b.w, b.h, 10.0);
+    g->FillRoundRect(color_, b, 10.0);
     g->DrawText(0xFFFFFFFF, button_text_.c_str(), b.x+10.0, b.y+20.0);
 
 }

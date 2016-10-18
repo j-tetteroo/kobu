@@ -21,9 +21,21 @@ public :
     YGraphics(SkCanvas *c);
     ~YGraphics(void);
     
-    
-    void DrawRoundRect(uint32_t color, float x, float y, float w, float h, float r);
-    void DrawRect(YRect r);
+    void DrawRect(uint32_t color, float x, float y, float w, float h, float lineWidth);
+    void DrawRect(uint32_t color, YRect r, float lineWidth);
+
+    void FillRect(uint32_t color, float x, float y, float w, float h);
+    void FillRect(uint32_t color, YRect r);
+
+    void DrawRoundRect(uint32_t color, float x, float y, float w, float h, float radius, float lineWidth);
+    void DrawRoundRect(uint32_t color, YRect r, float radius, float lineWidth);
+
+    void FillRoundRect(uint32_t color, float x, float y, float w, float h, float radius);
+    void FillRoundRect(uint32_t color, YRect r, float radius);
+
+    void DrawLine(uint32_t color, float x0, float y0, float x1, float y1, float lineWidth);
+    //void DrawLine(uint32_t color, Vec2 xy, float lineWidth);
+
     void DrawText(uint32_t color, const char *text, float x, float y);
     void SetCanvas(SkCanvas *c);
 

@@ -3,6 +3,8 @@
 
 #include "widgets/YDefaultWindowDecorator.h"
 #include "util/YTypes.h"
+#include "widgets/YCloseButton.h"
+
 
 
 // decorator dimensions
@@ -10,7 +12,7 @@ const float EDGE_W = 1.0;
 const float BAR_H = 20.0;
 
 // close button position
-const float BPOS_OFFSET_X = 10.0;
+const float BPOS_OFFSET_X = 15.0;
 const float BPOS_OFFSET_Y = 5.0;
 
 kobu::YDefaultWindowDecorator::YDefaultWindowDecorator(YWindow *parent) 
@@ -18,12 +20,6 @@ kobu::YDefaultWindowDecorator::YDefaultWindowDecorator(YWindow *parent)
 
 
 	YRect bounds = GetParent()->GetBounds();
-
-	/*
-	close_button_ = new YCloseButton(, 
-		max(bounds.x + bounds.w - BPOS_OFFSET_X, bounds.x),
-		max(bounds.y + BPOS_OFFSET_Y, bounds.y));
-	*/
 
 	//SetBounds(bounds);
 
@@ -36,6 +32,11 @@ kobu::YDefaultWindowDecorator::YDefaultWindowDecorator(YWindow *parent)
 	bounds.h += BAR_H+(EDGE_W);//std::max(bounds.h - EDGE_W, bounds.y + EDGE_W + BAR_H + EDGE_W);
 
 	SetBounds(bounds);
+
+	// TODO: make relative positioning
+	close_button_ = new YCloseButton(this, 
+		std::max(bounds.x + bounds.w - BPOS_OFFSET_X, bounds.x),
+		std::max(bounds.y + BPOS_OFFSET_Y, bounds.y));
 	
 }
 
@@ -51,6 +52,7 @@ void kobu::YDefaultWindowDecorator::Draw(YGraphics *g) {
 	DrawWindowEdge(g);
 	DrawTitleBar(g);
 	GetParent()->Draw(g);
+	close_button_->Draw(g);
 
 }
 
@@ -81,7 +83,7 @@ void kobu::YDefaultWindowDecorator::DrawTitleBar(YGraphics *g) {
 	//new_bounds.w = bounds.w+(EDGE_W*2.0);
 	bounds.h = BAR_H;
 
-	g->DrawRect(bounds);
+	g->DrawRect(0xFF000000, bounds, 0);
 }
 
 bool kobu::YDefaultWindowDecorator::DecoratorHit(YMouseEvent *e) {
@@ -133,7 +135,7 @@ void kobu::YDefaultWindowDecorator::DrawWindowEdge(YGraphics *g) {
 	//new_bounds.w = bounds.w+(EDGE_W*2.0);
 	//new_bounds.h = bounds.h+BAR_H+(EDGE_W*2.0);
 
-	g->DrawRect(GetBounds());
+	g->DrawRect(0xFF000000, GetBounds(), 0);
 
 }
 

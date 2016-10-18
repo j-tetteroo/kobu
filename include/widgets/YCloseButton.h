@@ -7,6 +7,9 @@
 #include "window/YWidget.h"
 #include "core/YEvent.h"
 #include "events/YMouseEvent.h"
+#include "core/YGraphics.h"
+#include "core/YWindow.h"
+
 
 namespace kobu {
 
