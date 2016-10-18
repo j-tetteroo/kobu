@@ -29,10 +29,17 @@ void kobu::YDefaultWindow::Draw(YGraphics *g) {
 
 void kobu::YDefaultWindow::TriggerEvent(YEvent *e) {
 
-	GetContainer()->TriggerEvent(e);
+
 	if (e->GetType() == YEventType::MOUSE) {
-		HandleMouseEvent((YMouseEvent *)e);
+		YRect b = GetBounds();
+		YSpace p = GetPadding();
+		Vec2 xy;
+		xy = ((YMouseEvent *)e)->GetXY();
+		xy.x -= b.x - p.left;
+		xy.y -= b.y - p.top;
+		((YMouseEvent *)e)->SetXY(xy);
 	}
+	GetContainer()->TriggerEvent(e);
 }
 
 void kobu::YDefaultWindow::HandleMouseEvent(YMouseEvent *e) {

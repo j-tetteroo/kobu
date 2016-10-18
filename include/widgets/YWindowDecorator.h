@@ -15,6 +15,7 @@ class YWindowDecorator : public YWindow
 {
 private :
 	YWindow *parent_;
+	YRect bounds_;
     
 
 public :
@@ -33,8 +34,8 @@ public :
     // layout
     uint32_t GetZ(void) const override { return parent_->GetZ(); }
     void SetZ(uint32_t z) override { parent_->SetZ(z); }
-    YRect GetBounds(void) const override { return parent_->GetBounds(); }
-    void SetBounds(YRect bounds) override { parent_->SetBounds(bounds); }
+    YRect GetBounds(void) const override { return bounds_; }
+    void SetBounds(YRect bounds) override { bounds_ = bounds; }
     YSpace GetPadding(void) const override { return parent_->GetPadding(); }
     void SetPadding(YSpace p) override { parent_->SetPadding(p); }
 

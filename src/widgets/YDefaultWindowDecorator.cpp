@@ -17,7 +17,7 @@ kobu::YDefaultWindowDecorator::YDefaultWindowDecorator(YWindow *parent)
 	: YWindowDecorator(parent) {
 
 
-	//YRect bounds = GetParent()->GetBounds();
+	YRect bounds = GetParent()->GetBounds();
 
 	/*
 	close_button_ = new YCloseButton(, 
@@ -28,13 +28,15 @@ kobu::YDefaultWindowDecorator::YDefaultWindowDecorator(YWindow *parent)
 	//SetBounds(bounds);
 
 	// Adjust bounds for decorator
-	/*
-	bounds_.x = std::min(bounds.x + EDGE_W,
-	bounds_.w = std::max(bounds.w - EDGE_W, bounds.x + EDGE_W + EDGE_W);
+	
+	bounds.x -= EDGE_W;
+	bounds.w += (EDGE_W);//std::max(bounds.w - EDGE_W, bounds.x + EDGE_W + EDGE_W);
 
-	bounds_.y = std::min(bounds.y + BAR_H + EDGE_W, bounds.y + bounds.h - EDGE_W - EDGE_W);
-	bounds_.h = std::max(bounds.h - EDGE_W, bounds.y + EDGE_W + BAR_H + EDGE_W);
-	*/
+	bounds.y -= (BAR_H+EDGE_W);//std::min(bounds.y + BAR_H + EDGE_W, bounds.y + bounds.h - EDGE_W - EDGE_W);
+	bounds.h += BAR_H+(EDGE_W);//std::max(bounds.h - EDGE_W, bounds.y + EDGE_W + BAR_H + EDGE_W);
+
+	SetBounds(bounds);
+	
 }
 
 
@@ -46,13 +48,10 @@ kobu::YDefaultWindowDecorator::~YDefaultWindowDecorator() {
 
 void kobu::YDefaultWindowDecorator::Draw(YGraphics *g) {
 
-	DrawTitleBar(g);
 	DrawWindowEdge(g);
+	DrawTitleBar(g);
+	GetParent()->Draw(g);
 
-	g->Push();
-		g->Translate(EDGE_W, EDGE_W+BAR_H);
-		GetParent()->Draw(g);
-	g->Pop();
 }
 
 void kobu::YDefaultWindowDecorator::TriggerEvent(YEvent *e) {
@@ -73,20 +72,20 @@ void kobu::YDefaultWindowDecorator::Resize(YRect bounds) {
 void kobu::YDefaultWindowDecorator::DrawTitleBar(YGraphics *g) {
 
 	YRect bounds;
-	YRect new_bounds;
+	//YRect new_bounds;
 
-	bounds = GetParent()->GetBounds();
+	bounds = GetBounds();
 
-	new_bounds.x = bounds.x;
-	new_bounds.y = bounds.y;
-	new_bounds.w = bounds.w+(EDGE_W*2.0);
-	new_bounds.h = BAR_H;
+	//new_bounds.x = bounds.x;
+	//new_bounds.y = bounds.y;
+	//new_bounds.w = bounds.w+(EDGE_W*2.0);
+	bounds.h = BAR_H;
 
-	g->DrawRect(new_bounds);
+	g->DrawRect(bounds);
 }
 
 bool kobu::YDefaultWindowDecorator::DecoratorHit(YMouseEvent *e) {
-	YRect b = this->GetBounds();
+	YRect b = GetBounds();
 	Vec2 hit = e->GetXY();
 
 	float edge_width = GetEdgeWidth();
@@ -124,17 +123,17 @@ void kobu::YDefaultWindowDecorator::HandleMouseEvent(YMouseEvent *e) {
 
 
 void kobu::YDefaultWindowDecorator::DrawWindowEdge(YGraphics *g) {
-	YRect bounds;
-	YRect new_bounds;
+	//YRect bounds;
+	//YRect new_bounds;
 
-	bounds = GetParent()->GetBounds();
+	//bounds = GetBounds();
 
-	new_bounds.x = bounds.x;
-	new_bounds.y = bounds.y;
-	new_bounds.w = bounds.w+(EDGE_W*2.0);
-	new_bounds.h = bounds.h+BAR_H+(EDGE_W*2.0);
+	//new_bounds.x = bounds.x;
+	//new_bounds.y = bounds.y;
+	//new_bounds.w = bounds.w+(EDGE_W*2.0);
+	//new_bounds.h = bounds.h+BAR_H+(EDGE_W*2.0);
 
-	g->DrawRect(new_bounds);
+	g->DrawRect(GetBounds());
 
 }
 

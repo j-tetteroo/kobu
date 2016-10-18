@@ -234,6 +234,12 @@ int main(int argc, char** argv) {
     clip_region.w = 400.0;
     clip_region.h = 400.0;
 
+    kobu::YRect c;
+    c.x = 0.0;
+    c.y = 0.0;
+    c.w = 400.0;
+    c.h = 400.0;
+
     /*
     test1.x = 0.0;
     test1.y = 0.0;
@@ -250,7 +256,7 @@ int main(int argc, char** argv) {
     kobu::YButton *button2 = new kobu::YButton("flopsaaa", 0xFF00FF00, 170.0, 30.0);
 
     absLayout = new kobu::YAbsoluteLayout();
-    container = new kobu::YGuiContainer(clip_region, clip_region, absLayout);
+    container = new kobu::YGuiContainer(c, c, absLayout);
 
     kobuWin = new kobu::YDefaultWindow(container, clip_region);
     kobu::YDefaultWindowDecorator *decorator = new kobu::YDefaultWindowDecorator(kobuWin);

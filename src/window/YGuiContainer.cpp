@@ -23,8 +23,9 @@ void kobu::YGuiContainer::AddWidget(YWidget *w) {
 }
 
 void kobu::YGuiContainer::Draw(YGraphics *g) {
-
+	YRect b = GetBounds();
 	// TODO: Translate padding
+	g->DrawRoundRect(0xFF99AAFF, b.x, b.y, b.w, b.h, 5.0);
 	for (YWidget *w : widgets_) {
 		w->Draw(g);
 	}
