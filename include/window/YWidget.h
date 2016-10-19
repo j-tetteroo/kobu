@@ -7,7 +7,7 @@
 
 namespace kobu {
 
-enum class WidgetState { ACTIVE, TRIGGERED, DISABLED, INVISIBLE };
+enum class WidgetState { ACTIVE, TRIGGERED, IDLE, DISABLED, INVISIBLE };
 
 class YWidget
 {
@@ -24,8 +24,9 @@ public :
     YWidget() {
     	bounds_.x = bounds_.y = bounds_.w = bounds_.h = 0.0;
         padding_ = margin_ = 0.0;
+        state_ = WidgetState::IDLE;
     }
-    YWidget(YRect bounds) : bounds_(bounds), padding_(0.0), margin_(0.0) {}
+    YWidget(YRect bounds) : bounds_(bounds), state_(WidgetState::IDLE), padding_(0.0), margin_(0.0) {}
     virtual ~YWidget() {};
 
     virtual void Draw(YGraphics *g) = 0;

@@ -26,6 +26,7 @@ kobu::YGraphics *graphics;
 kobu::YButton *button;
 kobu::YGuiContainer *container;
 kobu::YDefaultWindow *kobuWin;
+kobu::YDefaultWindowDecorator *kobuDecorator;
 
         SDL_DisplayMode dm;
         sk_sp<SkSurface> surface;
@@ -76,7 +77,7 @@ static void handle_events(ApplicationState* state, SkCanvas* canvas) {
                 coords.y = event.button.y;
                 std::cout << event.button.x << " " << event.button.y << "\n";
                 me = new kobu::YMouseEvent(coords, kobu::MouseEventType::M_DOWN , kobu::MouseButton::M_LEFT);
-                kobuWin->TriggerEvent((kobu::YEvent *)me);
+                kobuDecorator->TriggerEvent((kobu::YEvent *)me);
                 delete me;
                 
                 
@@ -85,7 +86,7 @@ static void handle_events(ApplicationState* state, SkCanvas* canvas) {
                 coords.x = event.button.x;
                 coords.y = event.button.y;
                 me = new kobu::YMouseEvent(coords, kobu::MouseEventType::M_UP , kobu::MouseButton::M_LEFT);
-                kobuWin->TriggerEvent((kobu::YEvent *)me);
+                kobuDecorator->TriggerEvent((kobu::YEvent *)me);
                 delete me;
                 break;
             case SDL_KEYDOWN: {
@@ -259,7 +260,7 @@ int main(int argc, char** argv) {
     container = new kobu::YGuiContainer(c, c, absLayout);
 
     kobuWin = new kobu::YDefaultWindow(container, clip_region);
-    kobu::YDefaultWindowDecorator *decorator = new kobu::YDefaultWindowDecorator(kobuWin);
+    kobuDecorator = new kobu::YDefaultWindowDecorator(kobuWin);
 
 
 
@@ -289,7 +290,7 @@ int main(int argc, char** argv) {
 
         //graphics->DrawRoundRect(0xFF00FF00, test1, test2, 10.0);
         //container->Draw(graphics);
-        decorator->Draw(graphics);
+        kobuDecorator->Draw(graphics);
 
         canvas->restore();
         canvas->flush();

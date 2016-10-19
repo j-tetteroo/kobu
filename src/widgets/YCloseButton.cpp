@@ -22,9 +22,21 @@ kobu::YCloseButton::~YCloseButton() {
 void kobu::YCloseButton::Draw(YGraphics *g) {
 
 	YRect b = GetBounds();
-    g->DrawRect(0xFF000000, b, 0);
-    g->DrawLine(0xFF000000, b.x+2.0, b.y+2.0, b.x+b.w-1.0, b.y+b.h-1.0, 1.0);
-    g->DrawLine(0xFF000000, b.x+2.0, b.y+b.h-1.0, b.x+b.w-1.0, b.y+2.0, 1.0);
+	switch(GetState()) {
+		case WidgetState::ACTIVE:
+			g->FillRect(0xFF000000, b.x, b.y, b.w+1.0, b.h+1.0);
+    		g->DrawLine(0xFFFFFFFF, b.x+2.0, b.y+2.0, b.x+b.w-1.0, b.y+b.h-1.0, 0.0);
+    		g->DrawLine(0xFFFFFFFF, b.x+2.0, b.y+b.h-1.0, b.x+b.w-1.0, b.y+2.0, 0.0);
+			break;
+
+		case WidgetState::IDLE:
+		default:
+		    g->DrawRect(0xFF000000, b, 0);
+    		g->DrawLine(0xFF000000, b.x+2.0, b.y+2.0, b.x+b.w-1.0, b.y+b.h-1.0, 0.0);
+    		g->DrawLine(0xFF000000, b.x+2.0, b.y+b.h-1.0, b.x+b.w-1.0, b.y+2.0, 0.0);
+    		break;
+	}
+
 }
 
 
@@ -42,10 +54,15 @@ void kobu::YCloseButton::TriggerEvent(kobu::YEvent *e) {
 
 void kobu::YCloseButton::HandleMouseEvent(YMouseEvent *e) {
 	if (e->GetButton() == MouseButton::M_LEFT) {
-		if (e->GetMeType() ==  MouseEventType::M_DOWN) {
-
-		} else if (e->GetMeType() ==  MouseEventType::M_UP) {
-
+		switch(e->GetMeType()) {
+			case MouseEventType::M_DOWN:
+				SetState(WidgetState::ACTIVE);
+				break;
+			case MouseEventType::M_UP:
+				SetState(WidgetState::IDLE);
+				break;
+			default:
+				break;
 		}
 	}
 }

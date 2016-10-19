@@ -37,7 +37,7 @@ public :
     float GetTitleBarHeight(void);
 
     void HandleMouseEvent(YMouseEvent *e);
-    bool DecoratorHit(YMouseEvent *e);
+    bool DecoratorHit(Vec2 loc);
 
 };
 
