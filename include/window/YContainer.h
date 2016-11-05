@@ -26,7 +26,7 @@ public :
     virtual void Resize(YRect bounds)=0;
     virtual void Scroll(float x_offset, float y_offset)=0;
     virtual void Layout()=0;
-    virtual void TriggerEvent(YEvent *e)=0;
+    virtual void TriggerEvent(YMouseButtonEvent *e)=0;
 
     YRect GetClipRegion(void) { return clip_region_; } 
     void SetClipRegion(YRect clip_region) { clip_region_ = clip_region; }

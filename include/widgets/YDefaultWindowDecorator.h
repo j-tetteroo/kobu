@@ -27,7 +27,7 @@ public :
 
     void Draw(YGraphics *g) override;
     void Resize(YRect bounds) override;
-    void TriggerEvent(YEvent *e) override;
+    void TriggerEvent(YMouseButtonEvent *e) override;
     void Destroy() override;
 
     void DrawTitleBar(YGraphics *g);

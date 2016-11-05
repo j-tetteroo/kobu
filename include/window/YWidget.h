@@ -4,6 +4,7 @@
 #include "core/YGraphics.h"
 #include "core/YEvent.h"
 #include "util/YTypes.h"
+#include "events/YMouseButtonEvent.h"
 
 namespace kobu {
 
@@ -18,6 +19,15 @@ private :
     WidgetState state_;
     float padding_;
     float margin_;
+    float has_focus_;
+
+    // mouse events
+    uint32_t last_click_;
+    MouseButton last_button_;
+    YMouseButtonEventHandler *m_button_handler_;
+    YMouseMoveEventHandler *m_move_handler_;
+
+
 
 
 public :
@@ -25,15 +35,21 @@ public :
     	bounds_.x = bounds_.y = bounds_.w = bounds_.h = 0.0;
         padding_ = margin_ = 0.0;
         state_ = WidgetState::IDLE;
+        last_click_ = 0;
+        m_button_handler_ = nullptr;
     }
-    YWidget(YRect bounds) : bounds_(bounds), state_(WidgetState::IDLE), padding_(0.0), margin_(0.0) {}
+    YWidget(YRect bounds) : bounds_(bounds), state_(WidgetState::IDLE), padding_(0.0), margin_(0.0), last_click_(0.0), m_button_handler_(nullptr) {}
     virtual ~YWidget() {};
 
     virtual void Draw(YGraphics *g) = 0;
-    virtual void TriggerEvent(YEvent *e) = 0;
+    virtual void TriggerEvent(YMouseButtonEvent *e);
+    virtual YWidget* AcceptFocus() = 0;
 
     void SetState(WidgetState state) { state_ =  state; }
     WidgetState GetState(void) const { return state_; }
+    bool GetFocus(void) const { return has_focus_; }
+    void SetFocus(bool f) { has_focus_ = f; }
+
 
     // layout
     YRect GetBounds(void) const { return bounds_; }

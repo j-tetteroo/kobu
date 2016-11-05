@@ -6,7 +6,7 @@
 
 #include "window/YWidget.h"
 #include "core/YEvent.h"
-#include "events/YMouseEvent.h"
+#include "events/YMouseButtonEvent.h"
 
 namespace kobu {
 
@@ -22,8 +22,8 @@ public :
     ~YButton();
     
     void Draw(YGraphics *g);
-    void TriggerEvent(YEvent *e);
-	void HandleMouseEvent(YMouseEvent *e);
+    void TriggerEvent(YMouseButtonEvent *e);
+	void HandleMouseEvent(YMouseButtonEvent *e);
 
 
     

@@ -24,7 +24,7 @@ public :
     virtual ~YWindowDecorator() {};
 
     virtual void Draw(YGraphics *g) override = 0;
-    virtual void TriggerEvent(YEvent *e) override = 0;
+    virtual void TriggerEvent(YMouseButtonEvent *e) override = 0;
     virtual void Resize(YRect bounds) override = 0;
     virtual void Destroy() override = 0;
 

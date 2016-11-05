@@ -7,7 +7,7 @@
 #include "window/YLayout.h"
 #include "window/YWidget.h"
 #include "core/YEvent.h"
-#include "events/YMouseEvent.h"
+#include "events/YMouseButtonEvent.h"
 #include "util/YTypes.h"
 #include "window/YLayout.h"
 
@@ -31,7 +31,7 @@ public :
     void Draw(YGraphics *g);
     void Resize(YRect bounds);
     void Scroll(float x_offset, float y_offset);
-    void TriggerEvent(YEvent *e);
+    void TriggerEvent(YMouseButtonEvent *e);
     void Layout();
 
     void SetLayout(YLayout *l) { layout_ = l; }

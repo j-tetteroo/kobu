@@ -25,12 +25,17 @@ public :
     virtual ~YWindow(void) {};
     virtual void Draw(YGraphics *g)=0;
     virtual void Resize(YRect bounds)=0;
-    virtual void TriggerEvent(YEvent *e)=0;
+    virtual void TriggerEvent(YMouseButtonEvent *e)=0;
     virtual void Destroy()=0;
 
 
     virtual YContainer *GetContainer(void) const = 0;
     virtual void SetContainer(YContainer *container) = 0;
+    virtual YWidget *GetCurrentFocus() const = 0;
+    virtual void SetCurrentFocus(YWidget *f) = 0;
+
+    virtual bool WindowHasFocus() const = 0;
+    virtual void WindowSetFocus(bool f) = 0;
 
     // layout
     virtual uint32_t GetZ(void) const = 0;
