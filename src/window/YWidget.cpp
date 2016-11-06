@@ -35,7 +35,6 @@ void kobu::YWidget::TriggerEvent(YMouseButtonEvent *e) {
 					}
 					break;
 				case MouseButtonEventType::M_UP:
-					SetState(WidgetState::IDLE);
 					if (m_button_handler_ != nullptr) {
 						m_button_handler_->OnMouseUp(e);
 						if (IsDoubleClick(e->GetTime(), last_click_, DOUBLE_CLICK_DELAY) && GetState() == WidgetState::ACTIVE) {
@@ -47,6 +46,7 @@ void kobu::YWidget::TriggerEvent(YMouseButtonEvent *e) {
 						}
 						last_click_ = e->GetTime();
 					}
+					SetState(WidgetState::IDLE);
 					break;
 				default:
 					break;

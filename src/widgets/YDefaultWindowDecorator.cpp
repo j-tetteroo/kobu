@@ -77,10 +77,10 @@ void kobu::YDefaultWindowDecorator::TriggerEvent(YMouseButtonEvent *e) {
 			close_button_->TriggerEvent(e);
 			std::cout << "Close window\n";
 
-			YRect newPos = GetParent()->GetBounds();
-			newPos.x += 50.0;
-			newPos.y += 20.0;
-			Resize(newPos);
+			//YRect newPos = GetParent()->GetBounds();
+			//newPos.x += 50.0;
+			//newPos.y += 20.0;
+			//Resize(newPos);
 			// END PLACEHOLDER CODE
 		}
 	} else {

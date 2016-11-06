@@ -12,7 +12,7 @@
 
 #include "core/YGraphics.h"
 #include "widgets/YButton.h"
-#include "events/YMouseButtonEvent.h"
+
 #include "window/YGuiContainer.h"
 #include "window/YDefaultWindow.h"
 #include "util/YTypes.h"
@@ -21,6 +21,9 @@
 #include "window/YLayout.h"
 #include "layout/YAbsoluteLayout.h"
 
+// events
+#include "events/YMouseButtonEvent.h"
+#include "events/YMouseMoveEvent.h"
 
 kobu::YGraphics *graphics;
 kobu::YButton *button;
@@ -55,6 +58,7 @@ static void handle_events(ApplicationState* state, SkCanvas* canvas) {
     SDL_Event event;
     kobu::Vec2 coords;
     kobu::YMouseButtonEvent *me;
+    //kobu::YMouseMoveEvent *mv; 
 
     while(SDL_PollEvent(&event)) {
         switch (event.type) {
@@ -64,6 +68,7 @@ static void handle_events(ApplicationState* state, SkCanvas* canvas) {
                     rect.fRight = event.motion.x;
                     rect.fBottom = event.motion.y;
                 }
+
                 break;
             case SDL_MOUSEBUTTONDOWN:
                 if (event.button.state == SDL_PRESSED) {

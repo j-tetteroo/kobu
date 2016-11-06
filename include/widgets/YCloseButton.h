@@ -25,7 +25,6 @@ public :
     ~YCloseButton();
     
     void Draw(YGraphics *g) override;
-    void TriggerEvent(YMouseButtonEvent *e) override;
     YWidget* AcceptFocus() override;
 
 };

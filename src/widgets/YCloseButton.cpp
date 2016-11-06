@@ -25,6 +25,7 @@ kobu::YWidget* kobu::YCloseButton::AcceptFocus() {
 
 void kobu::YCloseButton::Draw(YGraphics *g) {
 
+
 	YRect b = GetBounds();
 	switch(GetState()) {
 		case WidgetState::ACTIVE:
@@ -43,10 +44,6 @@ void kobu::YCloseButton::Draw(YGraphics *g) {
 
 }
 
-
-void kobu::YCloseButton::TriggerEvent(kobu::YMouseButtonEvent *e) {
-
-}
 
 
 
