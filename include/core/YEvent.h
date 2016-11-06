@@ -1,6 +1,8 @@
 #ifndef YEVENT_H
 #define YEVENT_H
 
+#include <cstdint>
+
 namespace kobu {
 
 enum class YEventType { 

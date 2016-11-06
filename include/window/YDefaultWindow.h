@@ -49,8 +49,6 @@ public :
     YSpace GetPadding(void) const override { return padding_; }
     void SetPadding(YSpace p) override { padding_ = p; }
 
-    // extra
-    void HandleMouseEvent(YMouseEvent *e);
 
 };
 

@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "core/YEvent.h"
-#include "events/YMouseEvent.h"
+#include "events/YMouseButtonEvent.h"
 #include "window/YDefaultWindow.h"
 #include "window/YGuiContainer.h"
 
@@ -27,24 +27,17 @@ void kobu::YDefaultWindow::Draw(YGraphics *g) {
 	g->Pop();
 }
 
-void kobu::YDefaultWindow::TriggerEvent(YEvent *e) {
+void kobu::YDefaultWindow::TriggerEvent(YMouseButtonEvent *e) {
 
-
-	if (e->GetType() == YEventType::MOUSE) {
-		YRect b = GetBounds();
-		YSpace p = GetPadding();
-		Vec2 xy;
-		xy = ((YMouseEvent *)e)->GetXY();
-		xy.x -= b.x - p.left;
-		xy.y -= b.y - p.top;
-		((YMouseEvent *)e)->SetXY(xy);
-	}
+	YRect b = GetBounds();
+	YSpace p = GetPadding();
+	Vec2 xy;
+	xy = e->GetPos();
+	xy.x -= b.x - p.left;
+	xy.y -= b.y - p.top;
+	e->SetPos(xy);
+	
 	GetContainer()->TriggerEvent(e);
-}
-
-void kobu::YDefaultWindow::HandleMouseEvent(YMouseEvent *e) {
-
-
 }
 
 void kobu::YDefaultWindow::Destroy() {

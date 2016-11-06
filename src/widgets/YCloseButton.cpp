@@ -19,6 +19,10 @@ kobu::YCloseButton::~YCloseButton() {
 
 }
 
+kobu::YWidget* kobu::YCloseButton::AcceptFocus() {
+	return nullptr;
+}
+
 void kobu::YCloseButton::Draw(YGraphics *g) {
 
 	YRect b = GetBounds();
@@ -40,31 +44,8 @@ void kobu::YCloseButton::Draw(YGraphics *g) {
 }
 
 
-void kobu::YCloseButton::TriggerEvent(kobu::YEvent *e) {
-    
-	switch(e->GetType()) {
-		case YEventType::MOUSE:
-			HandleMouseEvent((YMouseEvent *)e);
-			break;
-		default:
-			return;
-	}
-    
-}
+void kobu::YCloseButton::TriggerEvent(kobu::YMouseButtonEvent *e) {
 
-void kobu::YCloseButton::HandleMouseEvent(YMouseEvent *e) {
-	if (e->GetButton() == MouseButton::M_LEFT) {
-		switch(e->GetMeType()) {
-			case MouseEventType::M_DOWN:
-				SetState(WidgetState::ACTIVE);
-				break;
-			case MouseEventType::M_UP:
-				SetState(WidgetState::IDLE);
-				break;
-			default:
-				break;
-		}
-	}
 }
 
 

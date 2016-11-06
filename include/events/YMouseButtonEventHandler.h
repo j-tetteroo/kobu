@@ -16,11 +16,12 @@ private :
     
 public :
     YMouseButtonEventHandler() {}
+    virtual ~YMouseButtonEventHandler() {}
 
-    virtual void OnMouseDown(YMouseButtonEvent *e);
-    virtual void OnMouseUp(YMouseButtonEvent *e);
-    virtual void OnClick(YMouseButtonEvent *e);
-    virtual void OnDoubleClick(YMouseButtonEvent *e);
+    virtual void OnMouseDown(YMouseButtonEvent *e) {};
+    virtual void OnMouseUp(YMouseButtonEvent *e) {};
+    virtual void OnClick(YMouseButtonEvent *e) {};
+    virtual void OnDoubleClick(YMouseButtonEvent *e) {};
 
 };
 

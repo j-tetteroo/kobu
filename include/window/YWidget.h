@@ -5,6 +5,8 @@
 #include "core/YEvent.h"
 #include "util/YTypes.h"
 #include "events/YMouseButtonEvent.h"
+#include "events/YMouseButtonEventHandler.h"
+#include "events/YMouseMoveEventHandler.h"
 
 namespace kobu {
 
@@ -60,15 +62,8 @@ public :
     void SetMargin(float m) { margin_ = m; }
 
     // events
-
     // Check if coordinates fall in widget bounds
-    bool CheckHit(Vec2 hit) {
-        if (hit.x >= bounds_.x && hit.x <= (bounds_.x+bounds_.w) && hit.y >= bounds_.y && hit.y <= (bounds_.y+bounds_.h)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    bool CheckHit(Vec2 hit);
 
 
 };

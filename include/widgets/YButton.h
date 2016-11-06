@@ -21,10 +21,9 @@ public :
     YButton(std::string text, uint32_t color, float x, float y);
     ~YButton();
     
-    void Draw(YGraphics *g);
-    void TriggerEvent(YMouseButtonEvent *e);
-	void HandleMouseEvent(YMouseButtonEvent *e);
-
+    void Draw(YGraphics *g) override;
+    void TriggerEvent(YMouseButtonEvent *e) override;
+    YWidget* AcceptFocus() override;
 
     
 

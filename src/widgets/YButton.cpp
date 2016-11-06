@@ -1,8 +1,9 @@
 
+#include <iostream>
 
 #include "widgets/YButton.h"
 #include "core/YGraphics.h"
-#include <iostream>
+#include "events/YMouseButtonEvent.h"
 
 void kobu::YButton::Draw(YGraphics *g) {
 
@@ -13,27 +14,20 @@ void kobu::YButton::Draw(YGraphics *g) {
 }
 
 
-void kobu::YButton::TriggerEvent(kobu::YEvent *e) {
-    
-	switch(e->GetType()) {
-		case YEventType::MOUSE:
-			HandleMouseEvent((YMouseEvent *)e);
-			break;
-		default:
-			return;
-	}
-    
-}
-
-void kobu::YButton::HandleMouseEvent(YMouseEvent *e) {
+void kobu::YButton::TriggerEvent(kobu::YMouseButtonEvent *e) {
 	if (e->GetButton() == MouseButton::M_LEFT) {
-		if (e->GetMeType() ==  MouseEventType::M_DOWN) {
+		if (e->GetMeType() ==  MouseButtonEventType::M_DOWN) {
 			button_text_ = "Flop";
-		} else if (e->GetMeType() ==  MouseEventType::M_UP) {
+		} else if (e->GetMeType() ==  MouseButtonEventType::M_UP) {
 			button_text_ = "Flap";
 		}
 	}
 }
+
+kobu::YWidget* kobu::YButton::AcceptFocus() {
+	return nullptr;
+}
+
 
 kobu::YButton::YButton(std::string text, uint32_t color, float x, float y) : YWidget() {
 

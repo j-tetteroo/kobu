@@ -1,6 +1,8 @@
 #ifndef YMOUSE_BUTTON_EVENT_H
 #define YMOUSE_BUTTON_EVENT_H
 
+#include <cstdint>
+
 #include "core/YEvent.h"
 #include "util/YTypes.h"
 
@@ -32,11 +34,12 @@ private :
     MouseButton mb_;
     
 public :
-    YMouseButtonEvent(Vec2 pos, MouseButtonEventType met, MouseButton mb) 
-                :  YEvent(YEventType::MOUSE), pos_(pos), met_(met), mb_(mb) {}
+    YMouseButtonEvent(Vec2 pos, MouseButtonEventType met, MouseButton mb, uint32_t time) 
+                :  YEvent(YEventType::MOUSE, time), pos_(pos), met_(met), mb_(mb) {}
                 
     MouseButtonEventType GetMeType(void) const { return met_; }
     MouseButton GetButton(void) const { return mb_; }
+    
     Vec2 GetPos(void) const { return pos_; }
     void SetPos(Vec2 pos) { pos_ = pos; }
     

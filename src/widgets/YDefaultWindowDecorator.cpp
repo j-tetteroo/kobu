@@ -62,13 +62,30 @@ void kobu::YDefaultWindowDecorator::Draw(YGraphics *g) {
 
 }
 
-void kobu::YDefaultWindowDecorator::TriggerEvent(YEvent *e) {
-	switch(e->GetType()) {
-		case YEventType::MOUSE:
-			HandleMouseEvent((YMouseEvent *)e);
-			break;
-		default:
-			return;
+void kobu::YDefaultWindowDecorator::TriggerEvent(YMouseButtonEvent *e) {
+	Vec2 xy = e->GetPos();
+	YRect b = GetBounds();
+	xy.x -= b.x;
+	xy.y -= b.y;
+
+	if (DecoratorHit(xy)) {
+		// WindowDecorator hit
+		std::cout << "Decorator hit\n";
+		if (close_button_->CheckHit(xy)) {
+			// TODO: PLACEHOLDER CODE
+			// Close window
+			close_button_->TriggerEvent(e);
+			std::cout << "Close window\n";
+
+			YRect newPos = GetParent()->GetBounds();
+			newPos.x += 50.0;
+			newPos.y += 20.0;
+			Resize(newPos);
+			// END PLACEHOLDER CODE
+		}
+	} else {
+		// Window hit
+		GetParent()->TriggerEvent(e);
 	}
 }
 
@@ -121,32 +138,6 @@ bool kobu::YDefaultWindowDecorator::DecoratorHit(Vec2 loc) {
 
 }
 
-void kobu::YDefaultWindowDecorator::HandleMouseEvent(YMouseEvent *e) {
-
-	Vec2 xy = e->GetXY();
-	YRect b = GetBounds();
-	xy.x -= b.x;
-	xy.y -= b.y;
-
-	if (DecoratorHit(xy)) {
-		// WindowDecorator hit
-		std::cout << "Decorator hit\n";
-		if (close_button_->CheckHit(xy)) {
-			// Close window
-			close_button_->TriggerEvent(e);
-			std::cout << "Close window\n";
-
-			YRect newPos = GetParent()->GetBounds();
-			newPos.x += 50.0;
-			newPos.y += 20.0;
-			Resize(newPos);
-		}
-	} else {
-		// Window hit
-		GetParent()->TriggerEvent(e);
-	}
-
-}
 
 
 void kobu::YDefaultWindowDecorator::DrawWindowEdge(YGraphics *g) {

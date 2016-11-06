@@ -39,6 +39,13 @@ public :
     YSpace GetPadding(void) const override { return parent_->GetPadding(); }
     void SetPadding(YSpace p) override { parent_->SetPadding(p); }
 
+    // focus
+    YWidget *GetCurrentFocus() const override { return nullptr; }
+    void SetCurrentFocus(YWidget *f) override {}
+
+    bool WindowHasFocus() const override { return false; }
+    void WindowSetFocus(bool f) override {}
+
 
     // extra
     YWindow *GetParent(void) { return parent_; }

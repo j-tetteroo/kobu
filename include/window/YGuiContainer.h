@@ -20,7 +20,6 @@ class YGuiContainer : public YContainer
 private :
     std::vector<YWidget *> widgets_;
 	YLayout *layout_;
-	void HandleMouseEvent(YMouseEvent *e);
 
 
 public :
@@ -28,11 +27,13 @@ public :
     ~YGuiContainer(void);
     
     void AddWidget(YWidget *w);
-    void Draw(YGraphics *g);
+    YWidget* AcceptFocus() override;
+    void Draw(YGraphics *g) override;
     void Resize(YRect bounds);
     void Scroll(float x_offset, float y_offset);
-    void TriggerEvent(YMouseButtonEvent *e);
+    void TriggerEvent(YMouseButtonEvent *e) override;
     void Layout();
+
 
     void SetLayout(YLayout *l) { layout_ = l; }
     YLayout *Getlayout(void) const { return layout_; }

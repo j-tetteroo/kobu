@@ -13,6 +13,15 @@ namespace kobu {
 	}
 }
 
+// Check if coordinates fall in widget bounds
+bool kobu::YWidget::CheckHit(Vec2 hit) {
+    if (hit.x >= bounds_.x && hit.x <= (bounds_.x+bounds_.w) && hit.y >= bounds_.y && hit.y <= (bounds_.y+bounds_.h)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 void kobu::YWidget::TriggerEvent(YMouseButtonEvent *e) {
 
 	switch(e->GetButton()) {
@@ -20,21 +29,21 @@ void kobu::YWidget::TriggerEvent(YMouseButtonEvent *e) {
 		case MouseButton::M_LEFT:
 			switch (e->GetMeType()) {
 				case MouseButtonEventType::M_DOWN:
-					SetWidgetState(WidgetState::ACTIVE);
-					if (mbutton_handler_ != nullptr) {
-						m_button_handler_.OnMouseDown(e);
+					SetState(WidgetState::ACTIVE);
+					if (m_button_handler_ != nullptr) {
+						m_button_handler_->OnMouseDown(e);
 					}
 					break;
 				case MouseButtonEventType::M_UP:
-					SetWidgetState(WidgetState::IDLE);
-					if (mbutton_handler_ != nullptr) {
-						m_button_handler_.OnMouseUp(e);
-						if (IsDoubleClick(e->GetTime(), last_click_, DOUBLE_CLICK_DELAY) && GetWidgetState() == WidgetState::ACTIVE) {
+					SetState(WidgetState::IDLE);
+					if (m_button_handler_ != nullptr) {
+						m_button_handler_->OnMouseUp(e);
+						if (IsDoubleClick(e->GetTime(), last_click_, DOUBLE_CLICK_DELAY) && GetState() == WidgetState::ACTIVE) {
 							// call double click
-							m_button_handler_.OnDoubleClick(e);
+							m_button_handler_->OnDoubleClick(e);
 						} else {
 							// call single click
-							m_button_handler_.OnClick(e);
+							m_button_handler_->OnClick(e);
 						}
 						last_click_ = e->GetTime();
 					}
@@ -47,10 +56,10 @@ void kobu::YWidget::TriggerEvent(YMouseButtonEvent *e) {
 		case MouseButton::M_RIGHT:
 			switch (e->GetMeType()) {
 				case MouseButtonEventType::M_DOWN:
-					OnMouseDown(e);
+					m_button_handler_->OnMouseDown(e);
 					break;
 				case MouseButtonEventType::M_UP:
-					OnMouseUp(e);
+					m_button_handler_->OnMouseUp(e);
 					break;
 				default:
 					break;

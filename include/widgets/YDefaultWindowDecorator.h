@@ -8,6 +8,7 @@
 #include "widgets/YWindowDecorator.h"
 #include "util/YTypes.h"
 #include "widgets/YCloseButton.h"
+#include "events/YMouseButtonEvent.h"
 
 namespace kobu {
 
@@ -36,7 +37,6 @@ public :
     float GetEdgeWidth(void);
     float GetTitleBarHeight(void);
 
-    void HandleMouseEvent(YMouseEvent *e);
     bool DecoratorHit(Vec2 loc);
 
 };

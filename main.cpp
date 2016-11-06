@@ -12,7 +12,7 @@
 
 #include "core/YGraphics.h"
 #include "widgets/YButton.h"
-#include "events/YMouseEvent.h"
+#include "events/YMouseButtonEvent.h"
 #include "window/YGuiContainer.h"
 #include "window/YDefaultWindow.h"
 #include "util/YTypes.h"
@@ -54,7 +54,7 @@ static void handle_error() {
 static void handle_events(ApplicationState* state, SkCanvas* canvas) {
     SDL_Event event;
     kobu::Vec2 coords;
-    kobu::YMouseEvent *me;
+    kobu::YMouseButtonEvent *me;
 
     while(SDL_PollEvent(&event)) {
         switch (event.type) {
@@ -76,8 +76,8 @@ static void handle_events(ApplicationState* state, SkCanvas* canvas) {
                 coords.x = event.button.x;
                 coords.y = event.button.y;
                 std::cout << event.button.x << " " << event.button.y << "\n";
-                me = new kobu::YMouseEvent(coords, kobu::MouseEventType::M_DOWN , kobu::MouseButton::M_LEFT);
-                kobuDecorator->TriggerEvent((kobu::YEvent *)me);
+                me = new kobu::YMouseButtonEvent(coords, kobu::MouseButtonEventType::M_DOWN , kobu::MouseButton::M_LEFT, 0);
+                kobuDecorator->TriggerEvent(me);
                 delete me;
                 
                 
@@ -85,8 +85,8 @@ static void handle_events(ApplicationState* state, SkCanvas* canvas) {
             case SDL_MOUSEBUTTONUP:
                 coords.x = event.button.x;
                 coords.y = event.button.y;
-                me = new kobu::YMouseEvent(coords, kobu::MouseEventType::M_UP , kobu::MouseButton::M_LEFT);
-                kobuDecorator->TriggerEvent((kobu::YEvent *)me);
+                me = new kobu::YMouseButtonEvent(coords, kobu::MouseButtonEventType::M_UP , kobu::MouseButton::M_LEFT, 0);
+                kobuDecorator->TriggerEvent(me);
                 delete me;
                 break;
             case SDL_KEYDOWN: {

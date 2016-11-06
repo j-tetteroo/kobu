@@ -50,27 +50,22 @@ void kobu::YGuiContainer::Resize(YRect bounds) {
 
 }
 
-void kobu::YGuiContainer::TriggerEvent(YEvent *e) {
-	switch(e->GetType()) {
-		case YEventType::MOUSE:
-			HandleMouseEvent((YMouseEvent *)e);
-			break;
-		default:
-			return;
-	}
+kobu::YWidget* kobu::YGuiContainer::AcceptFocus() {
+	return nullptr;
 }
 
-void kobu::YGuiContainer::HandleMouseEvent(YMouseEvent *e) {
-	Vec2 hit = e->GetXY();
+void kobu::YGuiContainer::TriggerEvent(YMouseButtonEvent *e) {
+	Vec2 hit = e->GetPos();
 
 	// Iterate over widgets to find hit
 	for (YWidget *it : widgets_) {
 		if (it->CheckHit(hit)) {
             std::cout << "Hit\n";
-            it->TriggerEvent((YEvent *)e);
+            it->TriggerEvent(e);
             break;
 		}
 	}
 }
+
 
 

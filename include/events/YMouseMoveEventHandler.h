@@ -15,6 +15,7 @@ private :
     
 public :
     YMouseMoveEventHandler() {}
+    virtual ~YMouseMoveEventHandler() {}
 
     virtual void OnMouseOver(YMouseMoveEvent *e);
     virtual void OnMouseEnter(YMouseMoveEvent *e);

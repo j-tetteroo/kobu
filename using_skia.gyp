@@ -29,7 +29,9 @@
         'src/window/YDefaultWindow.cpp',
         'src/widgets/YDefaultWindowDecorator.cpp',
 	'src/layout/YAbsoluteLayout.cpp',
-        'src/widgets/YCloseButton.cpp'
+        'src/widgets/YCloseButton.cpp',
+        'src/window/YWidget.cpp',
+        'src/events/YMouseButtonEventHandler.cpp'
   
       ],
       'ldflags': [
