@@ -8,8 +8,26 @@
 void kobu::YButton::Draw(YGraphics *g) {
 
 	YRect b = GetBounds();
-    g->FillRoundRect(color_, b, 10.0);
-    g->DrawText(0xFFFFFFFF, button_text_.c_str(), b.x+10.0, b.y+20.0);
+
+    switch(GetState()) {
+    	case WidgetState::ACTIVE:
+    	   	g->FillRoundRect(0xFF00FF00, b, 10.0);
+    		g->DrawText(0xFFFFFFFF, button_text_.c_str(), b.x+10.0, b.y+20.0);
+    		break;
+    	case WidgetState::TRIGGERED:
+    	    g->DrawRoundRect(0x00000000, b, 10.0, 1.0);
+    		g->FillRoundRect(color_, b, 10.0);
+    		g->DrawText(0xFFFFFFFF, button_text_.c_str(), b.x+10.0, b.y+20.0);
+    		break;
+    	case WidgetState::IDLE:
+    	    g->FillRoundRect(color_, b, 10.0);
+    		g->DrawText(0xFFFFFFFF, button_text_.c_str(), b.x+10.0, b.y+20.0);
+    		break;
+    	case WidgetState::DISABLED:
+    	case WidgetState::INVISIBLE:
+    	default:
+    		break;
+    }
 
 }
 

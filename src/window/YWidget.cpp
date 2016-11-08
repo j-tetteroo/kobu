@@ -1,3 +1,4 @@
+#include <iostream>
 #include "window/YWidget.h"
 
 
@@ -36,16 +37,30 @@ void kobu::YWidget::TriggerEvent(YMouseMoveEvent *e, bool leave_widget) {
 	pos_prev.x -= pos_rel.x;
 	pos_prev.y -= pos_rel.y;
 
-	if (m_move_handler_ != nullptr) {
-		if (!leave_widget) {
-			if (pos_prev.x < 0.0 || pos_prev.y < 0.0) {	// Check if mouse entered from outside the widget
+	if (!leave_widget) {
+		std::cout << "pos prev" << pos_prev.x << "," << pos_prev.y << "\n";
+		if (pos_prev.x < 0.0 || 
+			pos_prev.x > widget_pos.w || 
+			pos_prev.y < 0.0 || 
+			pos_prev.y > widget_pos.h) 
+		{	// Check if mouse entered from outside the widget
+			if (m_move_handler_ != nullptr) {
 				m_move_handler_->OnMouseEnter(e);
 			}
+			std::cout << "Mouse enter\n";
+			SetState(WidgetState::TRIGGERED);
+		}
+		if (m_move_handler_ != nullptr) {
 			m_move_handler_->OnMouseOver(e);
-		} else {
+		}
+	} else {
+		if (m_move_handler_ != nullptr) {
 			m_move_handler_->OnMouseLeave(e);
 		}
+		std::cout << "Mouse leave\n";
+		SetState(WidgetState::IDLE);
 	}
+	
 
 }
 
