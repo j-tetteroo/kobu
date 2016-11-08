@@ -31,6 +31,7 @@ public :
     void Draw(YGraphics *g) override;
     void Resize(YRect bounds) override;
     void TriggerEvent(YMouseButtonEvent *e) override;
+    void TriggerEvent(YMouseMoveEvent *e) override;
     void Destroy() override;
 
     YContainer *GetContainer(void) const override { return container_; }

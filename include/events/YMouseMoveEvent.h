@@ -15,7 +15,7 @@ class YMouseMoveEvent : public YEvent
 {
     
 private :
-    Vec2 pos_;   // last known position relative to widget reference frame.
+    Vec2 pos_;   // current position relative to widget reference frame.
     Vec2 pos_rel_; // relative position wrt previous (absolute) position.
     MouseButton m_button_down_; // current mouse button down
 

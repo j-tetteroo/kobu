@@ -25,11 +25,15 @@
 #include "events/YMouseButtonEvent.h"
 #include "events/YMouseMoveEvent.h"
 
+// test
+#include "test/TestMouseButtonHandler.h"
+
 kobu::YGraphics *graphics;
 kobu::YButton *button;
 kobu::YGuiContainer *container;
 kobu::YDefaultWindow *kobuWin;
 kobu::YDefaultWindowDecorator *kobuDecorator;
+kobu::TestMouseButtonHandler *mHandler;
 
         SDL_DisplayMode dm;
         sk_sp<SkSurface> surface;
@@ -57,8 +61,11 @@ static void handle_error() {
 static void handle_events(ApplicationState* state, SkCanvas* canvas) {
     SDL_Event event;
     kobu::Vec2 coords;
+    kobu::Vec2 coords_rel;
     kobu::YMouseButtonEvent *me;
-    //kobu::YMouseMoveEvent *mv; 
+    kobu::YMouseMoveEvent *mv; 
+    kobu::MouseButton mb;
+
 
     while(SDL_PollEvent(&event)) {
         switch (event.type) {
@@ -68,7 +75,17 @@ static void handle_events(ApplicationState* state, SkCanvas* canvas) {
                     rect.fRight = event.motion.x;
                     rect.fBottom = event.motion.y;
                 }
-
+                coords.x = event.motion.x;
+                coords.y = event.motion.y;
+                coords_rel.x = event.motion.xrel;
+                coords_rel.y = event.motion.yrel;
+                if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
+                    mb = kobu::MouseButton::M_LEFT;
+                } else {
+                    mb = kobu::MouseButton::M_UNDEFINED;
+                }
+                mv = new kobu::YMouseMoveEvent(coords, coords_rel, mb, 0);
+                kobuDecorator->TriggerEvent(mv);
                 break;
             case SDL_MOUSEBUTTONDOWN:
                 if (event.button.state == SDL_PRESSED) {
@@ -267,7 +284,8 @@ int main(int argc, char** argv) {
     kobuWin = new kobu::YDefaultWindow(container, clip_region);
     kobuDecorator = new kobu::YDefaultWindowDecorator(kobuWin);
 
-
+    mHandler = new kobu::TestMouseButtonHandler();
+    button->SetMouseButtonHandler(mHandler);
 
     container->AddWidget(button);
     container->AddWidget(button2);

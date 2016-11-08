@@ -9,6 +9,7 @@
 #include "util/YTypes.h"
 #include "widgets/YCloseButton.h"
 #include "events/YMouseButtonEvent.h"
+#include "events/YMouseMoveEvent.h"
 
 namespace kobu {
 
@@ -29,6 +30,7 @@ public :
     void Draw(YGraphics *g) override;
     void Resize(YRect bounds) override;
     void TriggerEvent(YMouseButtonEvent *e) override;
+    void TriggerEvent(YMouseMoveEvent *e) override;
     void Destroy() override;
 
     void DrawTitleBar(YGraphics *g);

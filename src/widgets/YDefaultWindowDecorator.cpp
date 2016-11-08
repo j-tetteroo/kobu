@@ -62,6 +62,23 @@ void kobu::YDefaultWindowDecorator::Draw(YGraphics *g) {
 
 }
 
+void kobu::YDefaultWindowDecorator::TriggerEvent(YMouseMoveEvent *e) {
+	Vec2 xy = e->GetPos();
+	YRect b = GetBounds();
+	xy.x -= b.x;
+	xy.y -= b.y;
+
+	if (DecoratorHit(xy)) {
+		// WindowDecorator hit
+		if (close_button_->CheckHit(xy)) {
+			close_button_->TriggerEvent(e, false);
+		}
+	} else {
+		// Window hit
+		GetParent()->TriggerEvent(e);
+	}
+}
+
 void kobu::YDefaultWindowDecorator::TriggerEvent(YMouseButtonEvent *e) {
 	Vec2 xy = e->GetPos();
 	YRect b = GetBounds();

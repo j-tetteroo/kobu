@@ -29,9 +29,6 @@ private :
     YMouseButtonEventHandler *m_button_handler_;
     YMouseMoveEventHandler *m_move_handler_;
 
-
-
-
 public :
     YWidget() {
     	bounds_.x = bounds_.y = bounds_.w = bounds_.h = 0.0;
@@ -39,12 +36,25 @@ public :
         state_ = WidgetState::IDLE;
         last_click_ = 0;
         m_button_handler_ = nullptr;
+        m_move_handler_ = nullptr;
     }
-    YWidget(YRect bounds) : bounds_(bounds), state_(WidgetState::IDLE), padding_(0.0), margin_(0.0), last_click_(0.0), m_button_handler_(nullptr) {}
+    YWidget(YRect bounds) : 
+        bounds_(bounds), 
+        state_(WidgetState::IDLE), 
+        padding_(0.0), 
+        margin_(0.0), 
+        last_click_(0.0), 
+        m_button_handler_(nullptr),
+        m_move_handler_(nullptr) {}
     virtual ~YWidget() {};
 
     virtual void Draw(YGraphics *g) = 0;
+
+
     virtual void TriggerEvent(YMouseButtonEvent *e);
+    virtual void TriggerEvent(YMouseMoveEvent *e, bool leave_widget);
+
+
     virtual YWidget* AcceptFocus() = 0;
 
     void SetState(WidgetState state) { state_ =  state; }
@@ -52,6 +62,10 @@ public :
     bool GetFocus(void) const { return has_focus_; }
     void SetFocus(bool f) { has_focus_ = f; }
 
+    void SetMouseButtonHandler(YMouseButtonEventHandler *m) { m_button_handler_ = m; }
+    YMouseButtonEventHandler *GetMouseButtonHandler() { return m_button_handler_; }
+    void SetMouseMoveHandler(YMouseMoveEventHandler *m) { m_move_handler_ = m; }
+    YMouseMoveEventHandler *GetMouseMoveHandler() { return m_move_handler_; }
 
     // layout
     YRect GetBounds(void) const { return bounds_; }

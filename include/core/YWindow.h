@@ -6,6 +6,8 @@
 #include "core/YGraphics.h"
 #include "util/YTypes.h"
 #include "window/YContainer.h"
+#include "events/YMouseButtonEvent.h"
+#include "events/YMouseMoveEvent.h"
 
 namespace kobu {
 
@@ -26,6 +28,7 @@ public :
     virtual void Draw(YGraphics *g)=0;
     virtual void Resize(YRect bounds)=0;
     virtual void TriggerEvent(YMouseButtonEvent *e)=0;
+    virtual void TriggerEvent(YMouseMoveEvent *e)=0;
     virtual void Destroy()=0;
 
 

@@ -27,6 +27,19 @@ void kobu::YDefaultWindow::Draw(YGraphics *g) {
 	g->Pop();
 }
 
+void kobu::YDefaultWindow::TriggerEvent(YMouseMoveEvent *e) {
+
+	YRect b = GetBounds();
+	YSpace p = GetPadding();
+	Vec2 xy;
+	xy = e->GetPos();
+	xy.x -= b.x - p.left;
+	xy.y -= b.y - p.top;
+	e->SetPos(xy);
+	
+	GetContainer()->TriggerEvent(e, false);
+}
+
 void kobu::YDefaultWindow::TriggerEvent(YMouseButtonEvent *e) {
 
 	YRect b = GetBounds();

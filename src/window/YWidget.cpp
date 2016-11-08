@@ -22,6 +22,33 @@ bool kobu::YWidget::CheckHit(Vec2 hit) {
     }
 }
 
+void kobu::YWidget::TriggerEvent(YMouseMoveEvent *e, bool leave_widget) {
+
+	Vec2 pos = e->GetPos();
+	YRect widget_pos = GetBounds();
+	pos.x -= widget_pos.x;
+	pos.y -= widget_pos.y;
+	e->SetPos(pos);
+
+	Vec2 pos_prev = pos;
+	Vec2 pos_rel = e->GetPosRel();
+
+	pos_prev.x -= pos_rel.x;
+	pos_prev.y -= pos_rel.y;
+
+	if (m_move_handler_ != nullptr) {
+		if (!leave_widget) {
+			if (pos_prev.x < 0.0 || pos_prev.y < 0.0) {	// Check if mouse entered from outside the widget
+				m_move_handler_->OnMouseEnter(e);
+			}
+			m_move_handler_->OnMouseOver(e);
+		} else {
+			m_move_handler_->OnMouseLeave(e);
+		}
+	}
+
+}
+
 void kobu::YWidget::TriggerEvent(YMouseButtonEvent *e) {
 
 	switch(e->GetButton()) {

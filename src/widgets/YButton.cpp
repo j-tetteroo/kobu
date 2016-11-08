@@ -15,6 +15,7 @@ void kobu::YButton::Draw(YGraphics *g) {
 
 
 void kobu::YButton::TriggerEvent(kobu::YMouseButtonEvent *e) {
+	YWidget::TriggerEvent(e);
 	if (e->GetButton() == MouseButton::M_LEFT) {
 		if (e->GetMeType() ==  MouseButtonEventType::M_DOWN) {
 			button_text_ = "Flop";

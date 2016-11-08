@@ -31,7 +31,10 @@ public :
     void Draw(YGraphics *g) override;
     void Resize(YRect bounds);
     void Scroll(float x_offset, float y_offset);
+
+    void TriggerEvent(YMouseMoveEvent *e, bool leave_widget);
     void TriggerEvent(YMouseButtonEvent *e) override;
+    
     void Layout();
 
 

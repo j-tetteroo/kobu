@@ -54,7 +54,30 @@ kobu::YWidget* kobu::YGuiContainer::AcceptFocus() {
 	return nullptr;
 }
 
+void kobu::YGuiContainer::TriggerEvent(YMouseMoveEvent *e, bool leave_widget) {
+	// TODO: Container event handler
+
+	Vec2 hit_prev = e->GetPos();
+	Vec2 hit_rel = e->GetPosRel();
+	Vec2 hit = e->GetPos();
+
+	hit_prev.x -= hit_rel.x;
+	hit_prev.y -= hit_rel.y;
+
+	// Iterate over widgets to find hit and mouseleave
+	for (YWidget *it : widgets_) {
+		if (it->CheckHit(hit_prev)) {
+            it->TriggerEvent(e, true);
+		} else if (it->CheckHit(hit)) {
+			it->TriggerEvent(e, false);
+		}
+	}
+
+}
+
 void kobu::YGuiContainer::TriggerEvent(YMouseButtonEvent *e) {
+	// TODO: Container event handler
+
 	Vec2 hit = e->GetPos();
 
 	// Iterate over widgets to find hit
