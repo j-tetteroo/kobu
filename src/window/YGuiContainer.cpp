@@ -66,10 +66,10 @@ void kobu::YGuiContainer::TriggerEvent(YMouseMoveEvent *e, bool leave_widget) {
 
 	// Iterate over widgets to find hit and mouseleave
 	for (YWidget *it : widgets_) {
-		if (it->CheckHit(hit_prev)) {
-            it->TriggerEvent(e, true);
-		} else if (it->CheckHit(hit)) {
-			it->TriggerEvent(e, false);
+		if (it->CheckHit(hit)) {
+            it->TriggerEvent(e, false);
+		} else if (it->CheckHit(hit_prev)) {
+			it->TriggerEvent(e, true);
 		}
 	}
 

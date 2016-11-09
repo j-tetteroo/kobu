@@ -15,8 +15,8 @@ void kobu::YButton::Draw(YGraphics *g) {
     		g->DrawText(0xFFFFFFFF, button_text_.c_str(), b.x+10.0, b.y+20.0);
     		break;
     	case WidgetState::TRIGGERED:
-    	    g->DrawRoundRect(0x00000000, b, 10.0, 1.0);
-    		g->FillRoundRect(color_, b, 10.0);
+    	   	g->FillRoundRect(color_, b, 10.0);
+    	    g->DrawRoundRect(0xFF000000, b, 10.0, 2.0);
     		g->DrawText(0xFFFFFFFF, button_text_.c_str(), b.x+10.0, b.y+20.0);
     		break;
     	case WidgetState::IDLE:

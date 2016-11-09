@@ -38,7 +38,6 @@ void kobu::YWidget::TriggerEvent(YMouseMoveEvent *e, bool leave_widget) {
 	pos_prev.y -= pos_rel.y;
 
 	if (!leave_widget) {
-		std::cout << "pos prev" << pos_prev.x << "," << pos_prev.y << "\n";
 		if (pos_prev.x < 0.0 || 
 			pos_prev.x > widget_pos.w || 
 			pos_prev.y < 0.0 || 
