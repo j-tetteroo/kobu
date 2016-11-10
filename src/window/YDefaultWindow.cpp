@@ -36,12 +36,14 @@ void kobu::YDefaultWindow::TriggerEvent(YMouseMoveEvent *e) {
 	xy.x -= b.x - p.left;
 	xy.y -= b.y - p.top;
 	e->SetPos(xy);
+	e->SetDragWidget(GetDragWidget());
 	
 	GetContainer()->TriggerEvent(e, false);
 }
 
 void kobu::YDefaultWindow::TriggerEvent(YMouseButtonEvent *e) {
 
+	YWidget *w_return;
 	YRect b = GetBounds();
 	YSpace p = GetPadding();
 	Vec2 xy;
@@ -50,7 +52,12 @@ void kobu::YDefaultWindow::TriggerEvent(YMouseButtonEvent *e) {
 	xy.y -= b.y - p.top;
 	e->SetPos(xy);
 	
-	GetContainer()->TriggerEvent(e);
+	w_return = GetContainer()->TriggerEvent(e);
+	if (e->GetMeType() == MouseButtonEventType::M_DOWN) {
+		SetDragWidget(w_return);
+	} else {
+		SetDragWidget(nullptr);
+	}
 }
 
 void kobu::YDefaultWindow::Destroy() {

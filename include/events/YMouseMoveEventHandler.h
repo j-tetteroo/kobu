@@ -17,9 +17,10 @@ public :
     YMouseMoveEventHandler() {}
     virtual ~YMouseMoveEventHandler() {}
 
-    virtual void OnMouseOver(YMouseMoveEvent *e);
-    virtual void OnMouseEnter(YMouseMoveEvent *e);
-    virtual void OnMouseLeave(YMouseMoveEvent *e);
+    virtual void OnMouseMove(YMouseMoveEvent *e) {};
+    virtual void OnMouseDrag(YMouseMoveEvent *e) {};
+    virtual void OnMouseEnter(YMouseMoveEvent *e) {};
+    virtual void OnMouseLeave(YMouseMoveEvent *e) {};
 
 };
 

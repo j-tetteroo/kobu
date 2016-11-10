@@ -13,6 +13,7 @@ class YDefaultWindow : public YWindow
 private:
 	YContainer *container_;
 	YWidget *focus_;
+    YWidget *drag_widget_;
 
     YRect bounds_;
     uint32_t z_;
@@ -25,6 +26,7 @@ public :
     YDefaultWindow(YContainer *c, YRect w) : container_(c), bounds_(w), z_(INT_MAX) {
         padding_.top = padding_.bottom = padding_.left = padding_.right = 0.0;
         focus_ = container_;
+        drag_widget_ = nullptr;
     };
     ~YDefaultWindow(void);
     
@@ -41,6 +43,9 @@ public :
 
     bool WindowHasFocus() const override { return window_has_focus_; }
     void WindowSetFocus(bool f) override { window_has_focus_ = f; }
+
+    YWidget* GetDragWidget() const override { return drag_widget_; }
+    void SetDragWidget(YWidget *w) override { drag_widget_ = w; }
 
     // layout
     uint32_t GetZ(void) const override { return z_; }

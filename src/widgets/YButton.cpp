@@ -11,12 +11,13 @@ void kobu::YButton::Draw(YGraphics *g) {
 
     switch(GetState()) {
     	case WidgetState::ACTIVE:
-    	   	g->FillRoundRect(0xFF00FF00, b, 10.0);
+    	   	g->DrawRoundRect(0xFF000000, b, 10.0, 2.0);
+    	   	g->FillRoundRect(0xFFFFFF00, b, 10.0);
     		g->DrawText(0xFFFFFFFF, button_text_.c_str(), b.x+10.0, b.y+20.0);
     		break;
     	case WidgetState::TRIGGERED:
+    	   	g->DrawRoundRect(0xFF000000, b, 10.0, 2.0);
     	   	g->FillRoundRect(color_, b, 10.0);
-    	    g->DrawRoundRect(0xFF000000, b, 10.0, 2.0);
     		g->DrawText(0xFFFFFFFF, button_text_.c_str(), b.x+10.0, b.y+20.0);
     		break;
     	case WidgetState::IDLE:
@@ -32,8 +33,8 @@ void kobu::YButton::Draw(YGraphics *g) {
 }
 
 
-void kobu::YButton::TriggerEvent(kobu::YMouseButtonEvent *e) {
-	YWidget::TriggerEvent(e);
+kobu::YWidget *kobu::YButton::TriggerEvent(kobu::YMouseButtonEvent *e) {
+	
 	if (e->GetButton() == MouseButton::M_LEFT) {
 		if (e->GetMeType() ==  MouseButtonEventType::M_DOWN) {
 			button_text_ = "Flop";
@@ -41,6 +42,7 @@ void kobu::YButton::TriggerEvent(kobu::YMouseButtonEvent *e) {
 			button_text_ = "Flap";
 		}
 	}
+	return YWidget::TriggerEvent(e);
 }
 
 kobu::YWidget* kobu::YButton::AcceptFocus() {

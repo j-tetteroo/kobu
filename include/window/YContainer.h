@@ -5,6 +5,7 @@
 #include "core/YGraphics.h"
 #include "window/YWidget.h"
 #include "util/YTypes.h"
+#include "window/YLayout.h"
 
 namespace kobu {
 
@@ -28,6 +29,9 @@ public :
     virtual void Layout()=0;
     //virtual void TriggerEvent(YMouseButtonEvent *e)=0;
     //virtual void TriggerEvent(YMouseMoveEvent *e)=0;
+
+    virtual void SetLayout(YLayout *l) = 0;
+    virtual YLayout *Getlayout(void) const = 0;
 
     YRect GetClipRegion(void) { return clip_region_; } 
     void SetClipRegion(YRect clip_region) { clip_region_ = clip_region; }

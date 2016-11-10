@@ -32,14 +32,14 @@ public :
     void Resize(YRect bounds);
     void Scroll(float x_offset, float y_offset);
 
-    void TriggerEvent(YMouseMoveEvent *e, bool leave_widget);
-    void TriggerEvent(YMouseButtonEvent *e) override;
+    void TriggerEvent(YMouseMoveEvent *e, bool leave_widget) override;
+    YWidget* TriggerEvent(YMouseButtonEvent *e) override;
     
     void Layout();
 
 
-    void SetLayout(YLayout *l) { layout_ = l; }
-    YLayout *Getlayout(void) const { return layout_; }
+    void SetLayout(YLayout *l) override { layout_ = l; }
+    YLayout *Getlayout(void) const override { return layout_; }
 
     std::vector<YWidget *> *GetWidgetPtr() { return &widgets_; }
 

@@ -47,10 +47,14 @@ void kobu::YWidget::TriggerEvent(YMouseMoveEvent *e, bool leave_widget) {
 				m_move_handler_->OnMouseEnter(e);
 			}
 			std::cout << "Mouse enter\n";
-			SetState(WidgetState::TRIGGERED);
+			if (e->GetButtonDown() == MouseButton::M_LEFT) {
+				SetState(WidgetState::ACTIVE);
+			} else {
+				SetState(WidgetState::TRIGGERED);
+			}
 		}
 		if (m_move_handler_ != nullptr) {
-			m_move_handler_->OnMouseOver(e);
+			m_move_handler_->OnMouseMove(e);
 		}
 	} else {
 		if (m_move_handler_ != nullptr) {
@@ -63,7 +67,7 @@ void kobu::YWidget::TriggerEvent(YMouseMoveEvent *e, bool leave_widget) {
 
 }
 
-void kobu::YWidget::TriggerEvent(YMouseButtonEvent *e) {
+kobu::YWidget* kobu::YWidget::TriggerEvent(YMouseButtonEvent *e) {
 
 	switch(e->GetButton()) {
 
@@ -128,6 +132,8 @@ void kobu::YWidget::TriggerEvent(YMouseButtonEvent *e) {
 		default:
 			break;
 	}
+
+	return this;
 
 
 }

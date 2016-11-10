@@ -6,6 +6,7 @@
 #include "util/YTypes.h"
 #include "events/YMouseButtonEvent.h"
 #include "events/YMouseButtonEventHandler.h"
+#include "events/YMouseMoveEvent.h"
 #include "events/YMouseMoveEventHandler.h"
 
 namespace kobu {
@@ -51,7 +52,7 @@ public :
     virtual void Draw(YGraphics *g) = 0;
 
 
-    virtual void TriggerEvent(YMouseButtonEvent *e);
+    virtual YWidget* TriggerEvent(YMouseButtonEvent *e);
     virtual void TriggerEvent(YMouseMoveEvent *e, bool leave_widget);
 
 
