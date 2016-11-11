@@ -63,35 +63,55 @@ void kobu::YDefaultWindowDecorator::Draw(YGraphics *g) {
 }
 
 void kobu::YDefaultWindowDecorator::TriggerEvent(YMouseMoveEvent *e) {
-	Vec2 xy = e->GetPos();
+	/*
+	Vec2 hit = e->GetPos();
 	YRect b = GetBounds();
-	xy.x -= b.x;
-	xy.y -= b.y;
+	hit.x -= b.x;
+	hit.y -= b.y;
 
-	if (DecoratorHit(xy)) {
+	Vec2 hit_rel = e->GetPosRel();
+	Vec2 hit_prev = hit;
+
+	hit_prev.x -= hit_rel.x;
+	hit_prev.y -= hit_rel.y;
+	YWidget *w = GetParent()->GetDragWidget();
+
+	
+	if (DecoratorHit(hit) && w == nullptr) {
 		// WindowDecorator hit
-		if (close_button_->CheckHit(xy)) {
+		if (close_button_->CheckHit(hit)) {
 			close_button_->TriggerEvent(e, false);
+		} else if (close_button_->CheckHit(hit_prev)) {
+			close_button_->TriggerEvent(e, true);
 		}
 	} else {
 		// Window hit
-		GetParent()->TriggerEvent(e);
+		
 	}
+	*/
+	GetParent()->TriggerEvent(e);
 }
 
 void kobu::YDefaultWindowDecorator::TriggerEvent(YMouseButtonEvent *e) {
+	// Delegate as much state as possible to the parent window
+	/*
 	Vec2 xy = e->GetPos();
 	YRect b = GetBounds();
 	xy.x -= b.x;
 	xy.y -= b.y;
-
+	e->SetPos(xy);
+	
 	if (DecoratorHit(xy)) {
 		// WindowDecorator hit
 		std::cout << "Decorator hit\n";
+		GetParent()->SetDragWidget(nullptr);
 		if (close_button_->CheckHit(xy)) {
-			// TODO: PLACEHOLDER CODE
+			// TODO: PLACEHOLDER CODE replace with container
 			// Close window
 			close_button_->TriggerEvent(e);
+			if (e->GetMeType() == MouseButtonEventType::M_DOWN) {
+				GetParent()->SetDragWidget(close_button_);
+			}
 			std::cout << "Close window\n";
 
 			//YRect newPos = GetParent()->GetBounds();
@@ -104,6 +124,8 @@ void kobu::YDefaultWindowDecorator::TriggerEvent(YMouseButtonEvent *e) {
 		// Window hit
 		GetParent()->TriggerEvent(e);
 	}
+	*/
+	GetParent()->TriggerEvent(e);
 }
 
 void kobu::YDefaultWindowDecorator::Resize(YRect bounds) {

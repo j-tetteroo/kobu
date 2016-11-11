@@ -63,23 +63,14 @@ void kobu::YGuiContainer::TriggerEvent(YMouseMoveEvent *e, bool leave_widget) {
 
 	hit_prev.x -= hit_rel.x;
 	hit_prev.y -= hit_rel.y;
-	YWidget *w = e->GetDragWidget();
+	//YWidget *w = e->GetActiveWidget();
 
-	if (e->GetButtonDown() == MouseButton::M_LEFT && w != nullptr) {
-		// Fire drag widget
-		if (w->CheckHit(hit)) {
-			w->TriggerEvent(e, false);
-		} else if (w->CheckHit(hit_prev)) {
-			w->TriggerEvent(e, true);
-		}
-	} else {
-		// Iterate over widgets to find hit and mouseleave
-		for (YWidget *it : widgets_) {
-			if (it->CheckHit(hit)) {
-	            it->TriggerEvent(e, false);
-			} else if (it->CheckHit(hit_prev)) {
-				it->TriggerEvent(e, true);
-			}
+	// Iterate over widgets to find hit and mouseleave
+	for (YWidget *it : widgets_) {
+		if (it->CheckHit(hit)) {
+            it->TriggerEvent(e, false);
+		} else if (it->CheckHit(hit_prev)) {
+			it->TriggerEvent(e, true);
 		}
 	}
 
@@ -97,7 +88,7 @@ kobu::YWidget *kobu::YGuiContainer::TriggerEvent(YMouseButtonEvent *e) {
             return it->TriggerEvent(e);
 		}
 	}
-	return this;
+	return nullptr;
 }
 
 

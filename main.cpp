@@ -79,13 +79,19 @@ static void handle_events(ApplicationState* state, SkCanvas* canvas) {
                 coords.y = event.motion.y;
                 coords_rel.x = event.motion.xrel;
                 coords_rel.y = event.motion.yrel;
+                
                 if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
                     mb = kobu::MouseButton::M_LEFT;
                 } else {
                     mb = kobu::MouseButton::M_UNDEFINED;
                 }
+                if (coords.x < 0.0 || coords.y < 0.0) {
+                    break;
+                }
+                
                 mv = new kobu::YMouseMoveEvent(coords, coords_rel, mb, 0);
                 kobuDecorator->TriggerEvent(mv);
+                delete mv;
                 break;
             case SDL_MOUSEBUTTONDOWN:
                 if (event.button.state == SDL_PRESSED) {
@@ -101,8 +107,6 @@ static void handle_events(ApplicationState* state, SkCanvas* canvas) {
                 me = new kobu::YMouseButtonEvent(coords, kobu::MouseButtonEventType::M_DOWN , kobu::MouseButton::M_LEFT, 0);
                 kobuDecorator->TriggerEvent(me);
                 delete me;
-                
-                
                 break;
             case SDL_MOUSEBUTTONUP:
                 coords.x = event.button.x;

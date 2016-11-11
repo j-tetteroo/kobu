@@ -16,12 +16,11 @@ class YWindowDecorator : public YWindow
 private :
 	YWindow *parent_;
 	YRect bounds_;
-    YWidget *drag_widget_;
 
 
 public :
 
-	YWindowDecorator(YWindow *parent) : parent_(parent), drag_widget_(nullptr) {}
+	YWindowDecorator(YWindow *parent) : parent_(parent) {}
     virtual ~YWindowDecorator() {};
 
     virtual void Draw(YGraphics *g) override = 0;
@@ -47,9 +46,8 @@ public :
     bool WindowHasFocus() const override { return false; }
     void WindowSetFocus(bool f) override {}
 
-    YWidget* GetDragWidget() const override { return drag_widget_; }
-    void SetDragWidget(YWidget *w) override { drag_widget_ = w; }
-
+    YWidget* GetActiveWidget() const override { return parent_->GetActiveWidget(); }
+    void SetActiveWidget(YWidget *w) override { parent_->SetActiveWidget(w); }
 
     // extra
     YWindow *GetParent(void) { return parent_; }

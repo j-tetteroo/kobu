@@ -22,11 +22,12 @@ private :
     WidgetState state_;
     float padding_;
     float margin_;
-    float has_focus_;
+
 
     // mouse events
     uint32_t last_click_;
     MouseButton last_button_;
+    bool has_focus_;
     YMouseButtonEventHandler *m_button_handler_;
     YMouseMoveEventHandler *m_move_handler_;
 
@@ -38,6 +39,7 @@ public :
         last_click_ = 0;
         m_button_handler_ = nullptr;
         m_move_handler_ = nullptr;
+        has_focus_ = false;
     }
     YWidget(YRect bounds) : 
         bounds_(bounds), 
@@ -45,6 +47,7 @@ public :
         padding_(0.0), 
         margin_(0.0), 
         last_click_(0.0), 
+        has_focus_(false),
         m_button_handler_(nullptr),
         m_move_handler_(nullptr) {}
     virtual ~YWidget() {};

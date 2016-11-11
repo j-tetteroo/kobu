@@ -24,7 +24,7 @@ bool kobu::YWidget::CheckHit(Vec2 hit) {
 }
 
 void kobu::YWidget::TriggerEvent(YMouseMoveEvent *e, bool leave_widget) {
-
+	
 	Vec2 pos = e->GetPos();
 	YRect widget_pos = GetBounds();
 	pos.x -= widget_pos.x;
@@ -91,7 +91,7 @@ kobu::YWidget* kobu::YWidget::TriggerEvent(YMouseButtonEvent *e) {
 						}
 						last_click_ = e->GetTime();
 					}
-					SetState(WidgetState::IDLE);
+					SetState(WidgetState::TRIGGERED);
 					break;
 				default:
 					break;

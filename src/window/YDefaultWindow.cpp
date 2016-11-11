@@ -27,8 +27,23 @@ void kobu::YDefaultWindow::Draw(YGraphics *g) {
 	g->Pop();
 }
 
-void kobu::YDefaultWindow::TriggerEvent(YMouseMoveEvent *e) {
+kobu::YWidget* kobu::YDefaultWindow::GetActiveWidget() const { 
+	return active_widget_; 
+}
 
+
+void kobu::YDefaultWindow::SetActiveWidget(YWidget *w) {
+	if (active_widget_ != nullptr) {
+		active_widget_->SetFocus(false);
+	}
+	if (w != nullptr) {
+		w->SetFocus(true);
+	}
+	active_widget_ = w;
+}
+
+void kobu::YDefaultWindow::TriggerEvent(YMouseMoveEvent *e) {
+	
 	YRect b = GetBounds();
 	YSpace p = GetPadding();
 	Vec2 xy;
@@ -36,9 +51,23 @@ void kobu::YDefaultWindow::TriggerEvent(YMouseMoveEvent *e) {
 	xy.x -= b.x - p.left;
 	xy.y -= b.y - p.top;
 	e->SetPos(xy);
-	e->SetDragWidget(GetDragWidget());
+	//YWidget *w = GetActiveWidget();
+	//e->SetActiveWidget(w);
 	
+	/*
+	if (e->GetButtonDown() == MouseButton::M_LEFT && w != nullptr) {
+		// Fire drag widget
+		if (w->CheckHit(xy)) {
+			w->TriggerEvent(e, false);
+		} else {
+			w->TriggerEvent(e, true);
+		}
+	} else {
+		GetContainer()->TriggerEvent(e, false);
+	}
+	*/
 	GetContainer()->TriggerEvent(e, false);
+
 }
 
 void kobu::YDefaultWindow::TriggerEvent(YMouseButtonEvent *e) {
@@ -53,10 +82,11 @@ void kobu::YDefaultWindow::TriggerEvent(YMouseButtonEvent *e) {
 	e->SetPos(xy);
 	
 	w_return = GetContainer()->TriggerEvent(e);
+
 	if (e->GetMeType() == MouseButtonEventType::M_DOWN) {
-		SetDragWidget(w_return);
+		SetActiveWidget(w_return);
 	} else {
-		SetDragWidget(nullptr);
+		SetActiveWidget(nullptr);
 	}
 }
 
