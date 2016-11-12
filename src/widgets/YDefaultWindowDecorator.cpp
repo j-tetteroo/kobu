@@ -20,6 +20,8 @@ kobu::YDefaultWindowDecorator::YDefaultWindowDecorator(YWindow *parent)
 
 
 	YRect bounds = GetParent()->GetBounds();
+	YRect title_bar_bounds;
+	YAbsoluteLayout *abs_layout = new kobu::YAbsoluteLayout();
 
 	//SetBounds(bounds);
 
@@ -37,6 +39,14 @@ kobu::YDefaultWindowDecorator::YDefaultWindowDecorator(YWindow *parent)
 	close_button_ = new YCloseButton(this, 
 		std::max(bounds.w - BPOS_OFFSET_X, 0.0f),
 		std::max(BPOS_OFFSET_Y, 0.0f));
+
+	title_bar_bounds.x = EDGE_W;
+	title_bar_bounds.y = EDGE_W;
+	title_bar_bounds.w = bounds.w - EDGE_W;
+	title_bar_bounds.h = BAR_H - EDGE_W;
+
+	title_bar_container_ = new YGuiContainer(title_bar_bounds, title_bar_bounds, abs_layout);
+	title_bar_container_->AddWidget(close_button_);
 	
 }
 
@@ -57,13 +67,14 @@ void kobu::YDefaultWindowDecorator::Draw(YGraphics *g) {
 
 	g->Push();
 		g->Translate(b.x, b.y);
-		close_button_->Draw(g);
+		title_bar_container_->Draw(g);
 	g->Pop();
+	
 
 }
 
 void kobu::YDefaultWindowDecorator::TriggerEvent(YMouseMoveEvent *e) {
-	/*
+	
 	Vec2 hit = e->GetPos();
 	YRect b = GetBounds();
 	hit.x -= b.x;
@@ -74,6 +85,7 @@ void kobu::YDefaultWindowDecorator::TriggerEvent(YMouseMoveEvent *e) {
 
 	hit_prev.x -= hit_rel.x;
 	hit_prev.y -= hit_rel.y;
+	/*
 	YWidget *w = GetParent()->GetDragWidget();
 
 	
@@ -89,18 +101,25 @@ void kobu::YDefaultWindowDecorator::TriggerEvent(YMouseMoveEvent *e) {
 		
 	}
 	*/
-	GetParent()->TriggerEvent(e);
+	if (DecoratorHit(hit)) {
+		e->SetPos(hit);
+		title_bar_container_->TriggerEvent(e, false);
+	} else {
+		GetParent()->TriggerEvent(e);
+	}
+
 }
 
 void kobu::YDefaultWindowDecorator::TriggerEvent(YMouseButtonEvent *e) {
 	// Delegate as much state as possible to the parent window
-	/*
+	
 	Vec2 xy = e->GetPos();
 	YRect b = GetBounds();
 	xy.x -= b.x;
 	xy.y -= b.y;
-	e->SetPos(xy);
-	
+
+	YWidget *w_return;
+	/*
 	if (DecoratorHit(xy)) {
 		// WindowDecorator hit
 		std::cout << "Decorator hit\n";
@@ -125,7 +144,17 @@ void kobu::YDefaultWindowDecorator::TriggerEvent(YMouseButtonEvent *e) {
 		GetParent()->TriggerEvent(e);
 	}
 	*/
-	GetParent()->TriggerEvent(e);
+	if (DecoratorHit(xy)) {
+		e->SetPos(xy);
+		w_return = title_bar_container_->TriggerEvent(e);
+		if (e->GetMeType() == MouseButtonEventType::M_DOWN) {
+			GetParent()->SetActiveWidget(w_return);
+		} else {
+			GetParent()->SetActiveWidget(nullptr);
+		}
+	} else {
+		GetParent()->TriggerEvent(e);
+	}
 }
 
 void kobu::YDefaultWindowDecorator::Resize(YRect bounds) {

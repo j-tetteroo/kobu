@@ -10,6 +10,9 @@
 #include "widgets/YCloseButton.h"
 #include "events/YMouseButtonEvent.h"
 #include "events/YMouseMoveEvent.h"
+#include "window/YGuiContainer.h"
+#include "window/YLayout.h"
+#include "layout/YAbsoluteLayout.h"
 
 namespace kobu {
 
@@ -20,6 +23,7 @@ private :
 	YCloseButton *close_button_;
 	YWindow *parent_;
 	YRect bounds_;
+    YGuiContainer *title_bar_container_;
 
 
 public :

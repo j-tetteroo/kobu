@@ -81,6 +81,7 @@ void kobu::YDefaultWindow::TriggerEvent(YMouseButtonEvent *e) {
 	xy.y -= b.y - p.top;
 	e->SetPos(xy);
 	
+	std::cout << "container defaultwindow call\n";
 	w_return = GetContainer()->TriggerEvent(e);
 
 	if (e->GetMeType() == MouseButtonEventType::M_DOWN) {
