@@ -48,7 +48,11 @@ void kobu::YWidget::TriggerEvent(YMouseMoveEvent *e, bool leave_widget) {
 			}
 			std::cout << "Mouse enter\n";
 			if (e->GetButtonDown() == MouseButton::M_LEFT) {
-				SetState(WidgetState::ACTIVE);
+				if (GetFocus()) {
+					SetState(WidgetState::ACTIVE);
+				} else {
+					SetState(WidgetState::IDLE);
+				}
 			} else {
 				SetState(WidgetState::TRIGGERED);
 			}
