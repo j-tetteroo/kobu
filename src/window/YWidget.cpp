@@ -38,6 +38,7 @@ void kobu::YWidget::TriggerEvent(YMouseMoveEvent *e, bool leave_widget) {
 	pos_prev.y -= pos_rel.y;
 
 	if (!leave_widget) {
+		// Mouse enter
 		if (pos_prev.x < 0.0 || 
 			pos_prev.x > widget_pos.w || 
 			pos_prev.y < 0.0 || 
@@ -57,10 +58,18 @@ void kobu::YWidget::TriggerEvent(YMouseMoveEvent *e, bool leave_widget) {
 				SetState(WidgetState::TRIGGERED);
 			}
 		}
+
+		// Mouse move/drag
 		if (m_move_handler_ != nullptr) {
-			m_move_handler_->OnMouseMove(e);
+			if ((e->GetButtonDown() == MouseButton::M_LEFT) && GetFocus()) {
+				std::cout << "Mouse drag\n";
+				m_move_handler_->OnMouseDrag(e);
+			} else {
+				m_move_handler_->OnMouseMove(e);
+			}
 		}
 	} else {
+		// Mouse leave
 		if (m_move_handler_ != nullptr) {
 			m_move_handler_->OnMouseLeave(e);
 		}

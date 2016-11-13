@@ -27,6 +27,7 @@
 
 // test
 #include "test/TestMouseButtonHandler.h"
+#include "test/TestMouseMoveHandler.h"
 
 kobu::YGraphics *graphics;
 kobu::YButton *button;
@@ -34,6 +35,7 @@ kobu::YGuiContainer *container;
 kobu::YDefaultWindow *kobuWin;
 kobu::YDefaultWindowDecorator *kobuDecorator;
 kobu::TestMouseButtonHandler *mHandler;
+kobu::TestMouseMoveHandler *moveHandler;
 
         SDL_DisplayMode dm;
         sk_sp<SkSurface> surface;
@@ -291,6 +293,9 @@ int main(int argc, char** argv) {
     mHandler = new kobu::TestMouseButtonHandler();
     button->SetMouseButtonHandler(mHandler);
 
+    moveHandler = new kobu::TestMouseMoveHandler();
+    button->SetMouseMoveHandler(moveHandler);
+
     container->AddWidget(button);
     container->AddWidget(button2);
     container->SetLayout(absLayout);
@@ -334,6 +339,8 @@ int main(int argc, char** argv) {
     delete graphics;
     delete absLayout;
     delete kobuWin;
+    delete mHandler;
+    delete moveHandler;
     //delete surface;
     //grContext.reset();
     //delete grContext;
